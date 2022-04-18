@@ -5,6 +5,7 @@ export type UserUpdateInput = {
   lastName?: string | null;
   notes?: NoteUpdateManyWithoutUsersInput;
   password?: string;
+  profilePicture?: string | null;
   roles?: Array<string>;
   username?: string;
 };

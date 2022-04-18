@@ -5,6 +5,7 @@ export type UserCreateInput = {
   lastName?: string | null;
   notes?: NoteCreateNestedManyWithoutUsersInput;
   password: string;
+  profilePicture?: string | null;
   roles: Array<string>;
   username: string;
 };

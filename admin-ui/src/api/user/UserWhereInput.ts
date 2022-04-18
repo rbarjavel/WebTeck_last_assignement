@@ -7,5 +7,6 @@ export type UserWhereInput = {
   id?: StringFilter;
   lastName?: StringNullableFilter;
   notes?: NoteListRelationFilter;
+  profilePicture?: StringNullableFilter;
   username?: StringFilter;
 };

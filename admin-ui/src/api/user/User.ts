@@ -6,6 +6,7 @@ export type User = {
   id: string;
   lastName: string | null;
   notes?: Array<Note>;
+  profilePicture: string | null;
   roles: Array<string>;
   updatedAt: Date;
   username: string;

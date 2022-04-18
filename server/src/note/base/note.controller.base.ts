@@ -541,6 +541,7 @@ export class NoteControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,

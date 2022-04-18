@@ -8,15 +8,16 @@ generator client {
 }
 
 model User {
-  createdAt DateTime @default(now())
-  firstName String?
-  id        String   @id @default(cuid())
-  lastName  String?
-  notes     Note[]
-  password  String
-  roles     String[]
-  updatedAt DateTime @updatedAt
-  username  String   @unique
+  createdAt      DateTime @default(now())
+  firstName      String?
+  id             String   @id @default(cuid())
+  lastName       String?
+  notes          Note[]
+  password       String
+  profilePicture String?
+  roles          String[]
+  updatedAt      DateTime @updatedAt
+  username       String   @unique
 }
 
 model Note {
