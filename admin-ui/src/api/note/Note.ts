@@ -5,7 +5,10 @@ export type Note = {
   desc: string;
   dueDate: Date | null;
   id: string;
+  note?: Note | null;
+  notes?: Array<Note>;
+  owner?: Array<User>;
+  severity?: "Low" | "Moderate" | "High" | null;
   title: string;
   updatedAt: Date;
-  userId?: User | null;
 };

@@ -8,7 +8,7 @@ import {
   ReferenceField,
 } from "react-admin";
 import Pagination from "../Components/Pagination";
-import { USER_TITLE_FIELD } from "../user/UserTitle";
+import { NOTE_TITLE_FIELD } from "./NoteTitle";
 
 export const NoteList = (props: ListProps): React.ReactElement => {
   return (
@@ -24,11 +24,12 @@ export const NoteList = (props: ListProps): React.ReactElement => {
         <TextField label="Desc" source="desc" />
         <TextField label="Due date" source="dueDate" />
         <TextField label="ID" source="id" />
+        <ReferenceField label="Note" source="note.id" reference="Note">
+          <TextField source={NOTE_TITLE_FIELD} />
+        </ReferenceField>
+        <TextField label="Severity" source="severity" />
         <TextField label="Title" source="title" />
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceField label="User" source="user.id" reference="User">
-          <TextField source={USER_TITLE_FIELD} />
-        </ReferenceField>
       </Datagrid>
     </List>
   );

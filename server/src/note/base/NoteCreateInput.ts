@@ -11,9 +11,18 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsDate, IsOptional, ValidateNested } from "class-validator";
+import {
+  IsString,
+  IsDate,
+  IsOptional,
+  ValidateNested,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
+import { NoteCreateNestedManyWithoutNotesInput } from "./NoteCreateNestedManyWithoutNotesInput";
+import { UserCreateNestedManyWithoutNotesInput } from "./UserCreateNestedManyWithoutNotesInput";
+import { EnumNoteSeverity } from "./EnumNoteSeverity";
 @InputType()
 class NoteCreateInput {
   @ApiProperty({
@@ -36,23 +45,58 @@ class NoteCreateInput {
   dueDate?: Date | null;
 
   @ApiProperty({
+    required: false,
+    type: () => NoteWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => NoteWhereUniqueInput)
+  @IsOptional()
+  @Field(() => NoteWhereUniqueInput, {
+    nullable: true,
+  })
+  note?: NoteWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => NoteCreateNestedManyWithoutNotesInput,
+  })
+  @ValidateNested()
+  @Type(() => NoteCreateNestedManyWithoutNotesInput)
+  @IsOptional()
+  @Field(() => NoteCreateNestedManyWithoutNotesInput, {
+    nullable: true,
+  })
+  notes?: NoteCreateNestedManyWithoutNotesInput;
+
+  @ApiProperty({
+    required: true,
+    type: () => UserCreateNestedManyWithoutNotesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserCreateNestedManyWithoutNotesInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutNotesInput, {
+    nullable: true,
+  })
+  owner?: UserCreateNestedManyWithoutNotesInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteSeverity,
+  })
+  @IsEnum(EnumNoteSeverity)
+  @IsOptional()
+  @Field(() => EnumNoteSeverity, {
+    nullable: true,
+  })
+  severity?: "Low" | "Moderate" | "High" | null;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
   @IsString()
   @Field(() => String)
   title!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
-    nullable: true,
-  })
-  userId?: UserWhereUniqueInput | null;
 }
 export { NoteCreateInput };
