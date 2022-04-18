@@ -79,6 +79,7 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -119,6 +120,7 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -158,6 +160,7 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -218,6 +221,7 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+          profilePicture: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -258,6 +262,7 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+          profilePicture: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -304,14 +309,16 @@ export class UserControllerBase {
         desc: true,
         dueDate: true,
         id: true,
-        title: true,
-        updatedAt: true,
 
-        userId: {
+        note: {
           select: {
             id: true,
           },
         },
+
+        severity: true,
+        title: true,
+        updatedAt: true,
       },
     });
     if (results === null) {

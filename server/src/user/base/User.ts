@@ -64,6 +64,17 @@ class User {
   notes?: Array<Note>;
 
   @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  profilePicture!: string | null;
+
+  @ApiProperty({
     required: true,
     type: [String],
   })

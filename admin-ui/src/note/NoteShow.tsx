@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Show,
   SimpleShowLayout,
@@ -6,8 +7,11 @@ import {
   DateField,
   TextField,
   ReferenceField,
+  ReferenceManyField,
+  Datagrid,
 } from "react-admin";
-import { USER_TITLE_FIELD } from "../user/UserTitle";
+
+import { NOTE_TITLE_FIELD } from "./NoteTitle";
 
 export const NoteShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -17,11 +21,26 @@ export const NoteShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Desc" source="desc" />
         <TextField label="Due date" source="dueDate" />
         <TextField label="ID" source="id" />
+        <ReferenceField label="Note" source="note.id" reference="Note">
+          <TextField source={NOTE_TITLE_FIELD} />
+        </ReferenceField>
+        <TextField label="Severity" source="severity" />
         <TextField label="Title" source="title" />
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceField label="User" source="user.id" reference="User">
-          <TextField source={USER_TITLE_FIELD} />
-        </ReferenceField>
+        <ReferenceManyField reference="Note" target="NoteId" label="Notes">
+          <Datagrid rowClick="show">
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="Desc" source="desc" />
+            <TextField label="Due date" source="dueDate" />
+            <TextField label="ID" source="id" />
+            <ReferenceField label="Note" source="note.id" reference="Note">
+              <TextField source={NOTE_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField label="Severity" source="severity" />
+            <TextField label="Title" source="title" />
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );

@@ -61,6 +61,24 @@ class NoteOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  noteId?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  severity?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   title?: SortOrder;
 
   @ApiProperty({
@@ -71,15 +89,6 @@ class NoteOrderByInput {
     nullable: true,
   })
   updatedAt?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  userIdId?: SortOrder;
 }
 
 export { NoteOrderByInput };

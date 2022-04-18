@@ -11,9 +11,16 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
+import {
+  IsDate,
+  IsString,
+  IsOptional,
+  ValidateNested,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
+import { EnumNoteSeverity } from "./EnumNoteSeverity";
 @ObjectType()
 class Note {
   @ApiProperty({
@@ -52,6 +59,44 @@ class Note {
   id!: string;
 
   @ApiProperty({
+    required: false,
+    type: () => Note,
+  })
+  @ValidateNested()
+  @Type(() => Note)
+  @IsOptional()
+  note?: Note | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Note],
+  })
+  @ValidateNested()
+  @Type(() => Note)
+  @IsOptional()
+  notes?: Array<Note>;
+
+  @ApiProperty({
+    required: true,
+    type: () => [User],
+  })
+  @ValidateNested()
+  @Type(() => User)
+  @IsOptional()
+  owner?: Array<User>;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteSeverity,
+  })
+  @IsEnum(EnumNoteSeverity)
+  @IsOptional()
+  @Field(() => EnumNoteSeverity, {
+    nullable: true,
+  })
+  severity?: "Low" | "Moderate" | "High" | null;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
@@ -66,14 +111,5 @@ class Note {
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
-
-  @ApiProperty({
-    required: false,
-    type: () => User,
-  })
-  @ValidateNested()
-  @Type(() => User)
-  @IsOptional()
-  userId?: User | null;
 }
 export { Note };
