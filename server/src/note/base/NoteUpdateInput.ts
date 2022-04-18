@@ -11,9 +11,18 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsDate, ValidateNested } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsDate,
+  ValidateNested,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
+import { NoteUpdateManyWithoutNotesInput } from "./NoteUpdateManyWithoutNotesInput";
+import { UserUpdateManyWithoutNotesInput } from "./UserUpdateManyWithoutNotesInput";
+import { EnumNoteSeverity } from "./EnumNoteSeverity";
 @InputType()
 class NoteUpdateInput {
   @ApiProperty({
@@ -40,6 +49,53 @@ class NoteUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: () => NoteWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => NoteWhereUniqueInput)
+  @IsOptional()
+  @Field(() => NoteWhereUniqueInput, {
+    nullable: true,
+  })
+  note?: NoteWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => NoteUpdateManyWithoutNotesInput,
+  })
+  @ValidateNested()
+  @Type(() => NoteUpdateManyWithoutNotesInput)
+  @IsOptional()
+  @Field(() => NoteUpdateManyWithoutNotesInput, {
+    nullable: true,
+  })
+  notes?: NoteUpdateManyWithoutNotesInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserUpdateManyWithoutNotesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserUpdateManyWithoutNotesInput)
+  @IsOptional()
+  @Field(() => UserUpdateManyWithoutNotesInput, {
+    nullable: true,
+  })
+  owner?: UserUpdateManyWithoutNotesInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteSeverity,
+  })
+  @IsEnum(EnumNoteSeverity)
+  @IsOptional()
+  @Field(() => EnumNoteSeverity, {
+    nullable: true,
+  })
+  severity?: "Low" | "Moderate" | "High" | null;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -48,17 +104,5 @@ class NoteUpdateInput {
     nullable: true,
   })
   title?: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
-    nullable: true,
-  })
-  userId?: UserWhereUniqueInput | null;
 }
 export { NoteUpdateInput };

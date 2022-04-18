@@ -5,7 +5,8 @@ export type NoteOrderByInput = {
   desc?: SortOrder;
   dueDate?: SortOrder;
   id?: SortOrder;
+  noteId?: SortOrder;
+  severity?: SortOrder;
   title?: SortOrder;
   updatedAt?: SortOrder;
-  userIdId?: SortOrder;
 };

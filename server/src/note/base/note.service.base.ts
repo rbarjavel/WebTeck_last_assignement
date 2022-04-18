@@ -47,11 +47,33 @@ export class NoteServiceBase {
     return this.prisma.note.delete(args);
   }
 
-  async getUserId(parentId: string): Promise<User | null> {
+  async findNotes(
+    parentId: string,
+    args: Prisma.NoteFindManyArgs
+  ): Promise<Note[]> {
     return this.prisma.note
       .findUnique({
         where: { id: parentId },
       })
-      .userId();
+      .notes(args);
+  }
+
+  async findOwner(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<User[]> {
+    return this.prisma.note
+      .findUnique({
+        where: { id: parentId },
+      })
+      .owner(args);
+  }
+
+  async getNote(parentId: string): Promise<Note | null> {
+    return this.prisma.note
+      .findUnique({
+        where: { id: parentId },
+      })
+      .note();
   }
 }

@@ -25,6 +25,7 @@ import { DeleteNoteArgs } from "./DeleteNoteArgs";
 import { NoteFindManyArgs } from "./NoteFindManyArgs";
 import { NoteFindUniqueArgs } from "./NoteFindUniqueArgs";
 import { Note } from "./Note";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { NoteService } from "../note.service";
 
@@ -135,9 +136,9 @@ export class NoteResolverBase {
       data: {
         ...args.data,
 
-        userId: args.data.userId
+        note: args.data.note
           ? {
-              connect: args.data.userId,
+              connect: args.data.note,
             }
           : undefined,
       },
@@ -182,9 +183,9 @@ export class NoteResolverBase {
         data: {
           ...args.data,
 
-          userId: args.data.userId
+          note: args.data.note
             ? {
-                connect: args.data.userId,
+                connect: args.data.note,
               }
             : undefined,
         },
@@ -219,23 +220,75 @@ export class NoteResolverBase {
     }
   }
 
-  @graphql.ResolveField(() => User, { nullable: true })
+  @graphql.ResolveField(() => [Note])
   @nestAccessControl.UseRoles({
     resource: "Note",
     action: "read",
     possession: "any",
   })
-  async userId(
+  async notes(
     @graphql.Parent() parent: Note,
+    @graphql.Args() args: NoteFindManyArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User | null> {
+  ): Promise<Note[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Note",
+    });
+    const results = await this.service.findNotes(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: "Note",
+    action: "read",
+    possession: "any",
+  })
+  async owner(
+    @graphql.Parent() parent: Note,
+    @graphql.Args() args: UserFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<User[]> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "any",
       resource: "User",
     });
-    const result = await this.service.getUserId(parent.id);
+    const results = await this.service.findOwner(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => Note, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Note",
+    action: "read",
+    possession: "any",
+  })
+  async note(
+    @graphql.Parent() parent: Note,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Note | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Note",
+    });
+    const result = await this.service.getNote(parent.id);
 
     if (!result) {
       return null;

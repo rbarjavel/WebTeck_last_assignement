@@ -11,24 +11,16 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
-import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { Type } from "class-transformer";
+import { IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { StringFilter } from "../../util/StringFilter";
+import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
+import { NoteListRelationFilter } from "./NoteListRelationFilter";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
+import { EnumNoteSeverity } from "./EnumNoteSeverity";
 @InputType()
 class NoteWhereInput {
-  @ApiProperty({
-    required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
-  desc?: StringFilter;
-
   @ApiProperty({
     required: false,
     type: DateTimeNullableFilter,
@@ -53,6 +45,53 @@ class NoteWhereInput {
 
   @ApiProperty({
     required: false,
+    type: () => NoteWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => NoteWhereUniqueInput)
+  @IsOptional()
+  @Field(() => NoteWhereUniqueInput, {
+    nullable: true,
+  })
+  note?: NoteWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => NoteListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => NoteListRelationFilter)
+  @IsOptional()
+  @Field(() => NoteListRelationFilter, {
+    nullable: true,
+  })
+  notes?: NoteListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => UserListRelationFilter)
+  @IsOptional()
+  @Field(() => UserListRelationFilter, {
+    nullable: true,
+  })
+  owner?: UserListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteSeverity,
+  })
+  @IsEnum(EnumNoteSeverity)
+  @IsOptional()
+  @Field(() => EnumNoteSeverity, {
+    nullable: true,
+  })
+  severity?: "Low" | "Moderate" | "High";
+
+  @ApiProperty({
+    required: false,
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -61,17 +100,5 @@ class NoteWhereInput {
     nullable: true,
   })
   title?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
-    nullable: true,
-  })
-  userId?: UserWhereUniqueInput;
 }
 export { NoteWhereInput };
