@@ -1,0 +1,41 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("POSTGRESQL_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt      DateTime @default(now())
+  firstName      String?
+  id             String   @id @default(cuid())
+  lastName       String?
+  notes          Note[]
+  password       String
+  profilePicture String?
+  roles          String[]
+  updatedAt      DateTime @updatedAt
+  username       String   @unique
+}
+
+model Note {
+  createdAt DateTime          @default(now())
+  desc      String
+  dueDate   DateTime?
+  id        String            @id @default(cuid())
+  note      Note?             @relation(name: "NoteOnNotes", fields: [noteId], references: [id])
+  noteId    String?
+  notes     Note[]            @relation(name: "NoteOnNotes")
+  owner     User[]
+  severity  EnumNoteSeverity?
+  title     String
+  updatedAt DateTime          @updatedAt
+}
+
+enum EnumNoteSeverity {
+  Low
+  Moderate
+  High
+}
