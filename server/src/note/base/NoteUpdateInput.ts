@@ -23,6 +23,7 @@ import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteUpdateManyWithoutNotesInput } from "./NoteUpdateManyWithoutNotesInput";
 import { UserUpdateManyWithoutNotesInput } from "./UserUpdateManyWithoutNotesInput";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
+import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteUpdateInput {
   @ApiProperty({
@@ -93,6 +94,17 @@ class NoteUpdateInput {
     nullable: true,
   })
   severity?: "Low" | "Moderate" | "High" | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteStatus,
+  })
+  @IsEnum(EnumNoteStatus)
+  @IsOptional()
+  @Field(() => EnumNoteStatus, {
+    nullable: true,
+  })
+  status?: "ToDo" | "Done" | null;
 
   @ApiProperty({
     required: false,

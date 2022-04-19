@@ -95,6 +95,7 @@ export class NoteControllerBase {
         },
 
         severity: true,
+        status: true,
         title: true,
         updatedAt: true,
       },
@@ -142,6 +143,7 @@ export class NoteControllerBase {
         },
 
         severity: true,
+        status: true,
         title: true,
         updatedAt: true,
       },
@@ -188,6 +190,7 @@ export class NoteControllerBase {
         },
 
         severity: true,
+        status: true,
         title: true,
         updatedAt: true,
       },
@@ -263,6 +266,7 @@ export class NoteControllerBase {
           },
 
           severity: true,
+          status: true,
           title: true,
           updatedAt: true,
         },
@@ -310,6 +314,7 @@ export class NoteControllerBase {
           },
 
           severity: true,
+          status: true,
           title: true,
           updatedAt: true,
         },
@@ -363,6 +368,7 @@ export class NoteControllerBase {
         },
 
         severity: true,
+        status: true,
         title: true,
         updatedAt: true,
       },

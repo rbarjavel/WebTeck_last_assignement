@@ -25,6 +25,7 @@ export const NoteShow = (props: ShowProps): React.ReactElement => {
           <TextField source={NOTE_TITLE_FIELD} />
         </ReferenceField>
         <TextField label="Severity" source="severity" />
+        <TextField label="Status" source="status" />
         <TextField label="Title" source="title" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceManyField reference="Note" target="NoteId" label="Notes">
@@ -37,6 +38,7 @@ export const NoteShow = (props: ShowProps): React.ReactElement => {
               <TextField source={NOTE_TITLE_FIELD} />
             </ReferenceField>
             <TextField label="Severity" source="severity" />
+            <TextField label="Status" source="status" />
             <TextField label="Title" source="title" />
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>

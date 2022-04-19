@@ -9,6 +9,7 @@ export type Note = {
   notes?: Array<Note>;
   owner?: Array<User>;
   severity?: "Low" | "Moderate" | "High" | null;
+  status?: "ToDo" | "Done" | null;
   title: string;
   updatedAt: Date;
 };

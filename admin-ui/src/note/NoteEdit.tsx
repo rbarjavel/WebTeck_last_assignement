@@ -52,6 +52,17 @@ export const NoteEdit = (props: EditProps): React.ReactElement => {
           allowEmpty
           optionValue="value"
         />
+        <SelectInput
+          source="status"
+          label="Status"
+          choices={[
+            { label: "ToDO", value: "ToDo" },
+            { label: "Done", value: "Done" },
+          ]}
+          optionText="label"
+          allowEmpty
+          optionValue="value"
+        />
         <TextInput label="Title" source="title" />
       </SimpleForm>
     </Edit>

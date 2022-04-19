@@ -19,6 +19,7 @@ import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteListRelationFilter } from "./NoteListRelationFilter";
 import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
+import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteWhereInput {
   @ApiProperty({
@@ -89,6 +90,17 @@ class NoteWhereInput {
     nullable: true,
   })
   severity?: "Low" | "Moderate" | "High";
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteStatus,
+  })
+  @IsEnum(EnumNoteStatus)
+  @IsOptional()
+  @Field(() => EnumNoteStatus, {
+    nullable: true,
+  })
+  status?: "ToDo" | "Done";
 
   @ApiProperty({
     required: false,

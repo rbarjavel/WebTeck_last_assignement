@@ -9,5 +9,6 @@ export type NoteUpdateInput = {
   notes?: NoteUpdateManyWithoutNotesInput;
   owner?: UserUpdateManyWithoutNotesInput;
   severity?: "Low" | "Moderate" | "High" | null;
+  status?: "ToDo" | "Done" | null;
   title?: string;
 };

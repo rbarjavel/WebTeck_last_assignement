@@ -317,6 +317,7 @@ export class UserControllerBase {
         },
 
         severity: true,
+        status: true,
         title: true,
         updatedAt: true,
       },

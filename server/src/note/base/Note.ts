@@ -21,6 +21,7 @@ import {
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
+import { EnumNoteStatus } from "./EnumNoteStatus";
 @ObjectType()
 class Note {
   @ApiProperty({
@@ -95,6 +96,17 @@ class Note {
     nullable: true,
   })
   severity?: "Low" | "Moderate" | "High" | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteStatus,
+  })
+  @IsEnum(EnumNoteStatus)
+  @IsOptional()
+  @Field(() => EnumNoteStatus, {
+    nullable: true,
+  })
+  status?: "ToDo" | "Done" | null;
 
   @ApiProperty({
     required: true,
