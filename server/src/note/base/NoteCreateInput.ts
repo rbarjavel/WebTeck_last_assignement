@@ -23,6 +23,7 @@ import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteCreateNestedManyWithoutNotesInput } from "./NoteCreateNestedManyWithoutNotesInput";
 import { UserCreateNestedManyWithoutNotesInput } from "./UserCreateNestedManyWithoutNotesInput";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
+import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteCreateInput {
   @ApiProperty({
@@ -90,6 +91,17 @@ class NoteCreateInput {
     nullable: true,
   })
   severity?: "Low" | "Moderate" | "High" | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteStatus,
+  })
+  @IsEnum(EnumNoteStatus)
+  @IsOptional()
+  @Field(() => EnumNoteStatus, {
+    nullable: true,
+  })
+  status?: "ToDo" | "Done" | null;
 
   @ApiProperty({
     required: true,

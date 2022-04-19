@@ -9,5 +9,6 @@ export type NoteCreateInput = {
   notes?: NoteCreateNestedManyWithoutNotesInput;
   owner?: UserCreateNestedManyWithoutNotesInput;
   severity?: "Low" | "Moderate" | "High" | null;
+  status?: "ToDo" | "Done" | null;
   title: string;
 };

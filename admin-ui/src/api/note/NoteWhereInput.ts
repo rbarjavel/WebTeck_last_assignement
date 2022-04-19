@@ -11,5 +11,6 @@ export type NoteWhereInput = {
   notes?: NoteListRelationFilter;
   owner?: UserListRelationFilter;
   severity?: "Low" | "Moderate" | "High";
+  status?: "ToDo" | "Done";
   title?: StringFilter;
 };
