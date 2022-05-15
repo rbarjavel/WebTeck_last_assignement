@@ -1,8 +1,8 @@
 import { NoteCreateNestedManyWithoutUsersInput } from "./NoteCreateNestedManyWithoutUsersInput";
 
 export type UserCreateInput = {
-  firstName?: string | null;
-  lastName?: string | null;
+  firstName: string;
+  lastName: string;
   notes?: NoteCreateNestedManyWithoutUsersInput;
   password: string;
   profilePicture?: string | null;

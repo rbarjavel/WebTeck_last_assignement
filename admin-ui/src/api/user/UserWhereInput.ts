@@ -1,11 +1,11 @@
-import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { NoteListRelationFilter } from "../note/NoteListRelationFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 
 export type UserWhereInput = {
-  firstName?: StringNullableFilter;
+  firstName?: StringFilter;
   id?: StringFilter;
-  lastName?: StringNullableFilter;
+  lastName?: StringFilter;
   notes?: NoteListRelationFilter;
   profilePicture?: StringNullableFilter;
   username?: StringFilter;
