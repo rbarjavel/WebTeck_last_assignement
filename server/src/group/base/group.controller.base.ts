@@ -27,6 +27,9 @@ import { GroupWhereUniqueInput } from "./GroupWhereUniqueInput";
 import { GroupFindManyArgs } from "./GroupFindManyArgs";
 import { GroupUpdateInput } from "./GroupUpdateInput";
 import { Group } from "./Group";
+import { NoteFindManyArgs } from "../../note/base/NoteFindManyArgs";
+import { Note } from "../../note/base/Note";
+import { NoteWhereUniqueInput } from "../../note/base/NoteWhereUniqueInput";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
@@ -153,6 +156,96 @@ export class GroupControllerBase {
       }
       throw error;
     }
+  }
+
+  @Public()
+  @common.Get("/:id/notes")
+  @ApiNestedQuery(NoteFindManyArgs)
+  async findManyNotes(
+    @common.Req() request: Request,
+    @common.Param() params: GroupWhereUniqueInput
+  ): Promise<Note[]> {
+    const query = plainToClass(NoteFindManyArgs, request.query);
+    const results = await this.service.findNotes(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        desc: true,
+        dueDate: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        serverity: true,
+        status: true,
+        title: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @Public()
+  @common.Post("/:id/notes")
+  async connectNotes(
+    @common.Param() params: GroupWhereUniqueInput,
+    @common.Body() body: NoteWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      notes: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @Public()
+  @common.Patch("/:id/notes")
+  async updateNotes(
+    @common.Param() params: GroupWhereUniqueInput,
+    @common.Body() body: NoteWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      notes: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @Public()
+  @common.Delete("/:id/notes")
+  async disconnectNotes(
+    @common.Param() params: GroupWhereUniqueInput,
+    @common.Body() body: NoteWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      notes: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

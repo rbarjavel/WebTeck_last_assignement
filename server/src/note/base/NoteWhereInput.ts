@@ -13,11 +13,46 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
-import { NoteListRelationFilter } from "../../note/base/NoteListRelationFilter";
-import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
+import { IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
+import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
+import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
-class GroupWhereInput {
+class NoteWhereInput {
+  @ApiProperty({
+    required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  desc?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: DateTimeNullableFilter,
+  })
+  @Type(() => DateTimeNullableFilter)
+  @IsOptional()
+  @Field(() => DateTimeNullableFilter, {
+    nullable: true,
+  })
+  dueDate?: DateTimeNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => GroupWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => GroupWhereUniqueInput)
+  @IsOptional()
+  @Field(() => GroupWhereUniqueInput, {
+    nullable: true,
+  })
+  group?: GroupWhereUniqueInput;
+
   @ApiProperty({
     required: false,
     type: StringFilter,
@@ -31,6 +66,17 @@ class GroupWhereInput {
 
   @ApiProperty({
     required: false,
+    enum: EnumNoteStatus,
+  })
+  @IsEnum(EnumNoteStatus)
+  @IsOptional()
+  @Field(() => EnumNoteStatus, {
+    nullable: true,
+  })
+  status?: "ToDo" | "InProgress" | "Done";
+
+  @ApiProperty({
+    required: false,
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -38,30 +84,6 @@ class GroupWhereInput {
   @Field(() => StringFilter, {
     nullable: true,
   })
-  name?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => NoteListRelationFilter)
-  @IsOptional()
-  @Field(() => NoteListRelationFilter, {
-    nullable: true,
-  })
-  notes?: NoteListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => UserListRelationFilter)
-  @IsOptional()
-  @Field(() => UserListRelationFilter, {
-    nullable: true,
-  })
-  users?: UserListRelationFilter;
+  title?: StringFilter;
 }
-export { GroupWhereInput };
+export { NoteWhereInput };

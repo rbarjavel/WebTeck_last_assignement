@@ -11,45 +11,46 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { NoteUpdateManyWithoutGroupsInput } from "./NoteUpdateManyWithoutGroupsInput";
+import { NoteWhereInput } from "./NoteWhereInput";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { UserUpdateManyWithoutGroupsInput } from "./UserUpdateManyWithoutGroupsInput";
+
 @InputType()
-class GroupUpdateInput {
+class NoteListRelationFilter {
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => NoteWhereInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => NoteWhereInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => NoteWhereInput, {
     nullable: true,
   })
-  name?: string;
+  every?: NoteWhereInput;
 
   @ApiProperty({
     required: false,
-    type: () => NoteUpdateManyWithoutGroupsInput,
+    type: () => NoteWhereInput,
   })
   @ValidateNested()
-  @Type(() => NoteUpdateManyWithoutGroupsInput)
+  @Type(() => NoteWhereInput)
   @IsOptional()
-  @Field(() => NoteUpdateManyWithoutGroupsInput, {
+  @Field(() => NoteWhereInput, {
     nullable: true,
   })
-  notes?: NoteUpdateManyWithoutGroupsInput;
+  some?: NoteWhereInput;
 
   @ApiProperty({
     required: false,
-    type: () => UserUpdateManyWithoutGroupsInput,
+    type: () => NoteWhereInput,
   })
   @ValidateNested()
-  @Type(() => UserUpdateManyWithoutGroupsInput)
+  @Type(() => NoteWhereInput)
   @IsOptional()
-  @Field(() => UserUpdateManyWithoutGroupsInput, {
+  @Field(() => NoteWhereInput, {
     nullable: true,
   })
-  users?: UserUpdateManyWithoutGroupsInput;
+  none?: NoteWhereInput;
 }
-export { GroupUpdateInput };
+export { NoteListRelationFilter };
