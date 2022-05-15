@@ -12,7 +12,6 @@ import {
 } from "react-admin";
 
 import { GROUP_TITLE_FIELD } from "./GroupTitle";
-import { NOTE_TITLE_FIELD } from "../note/NoteTitle";
 
 export const GroupShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -31,9 +30,6 @@ export const GroupShow = (props: ShowProps): React.ReactElement => {
               <TextField source={GROUP_TITLE_FIELD} />
             </ReferenceField>
             <TextField label="ID" source="id" />
-            <ReferenceField label="Note" source="note.id" reference="Note">
-              <TextField source={NOTE_TITLE_FIELD} />
-            </ReferenceField>
             <TextField label="Severity" source="severity" />
             <TextField label="Status" source="status" />
             <TextField label="Title" source="title" />

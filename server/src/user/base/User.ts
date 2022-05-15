@@ -14,7 +14,6 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { Group } from "../../group/base/Group";
-import { Note } from "../../note/base/Note";
 @ObjectType()
 class User {
   @ApiProperty({
@@ -57,15 +56,6 @@ class User {
   @IsString()
   @Field(() => String)
   lastName!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Note],
-  })
-  @ValidateNested()
-  @Type(() => Note)
-  @IsOptional()
-  notes?: Array<Note>;
 
   @ApiProperty({
     required: false,

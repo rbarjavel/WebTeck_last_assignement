@@ -13,7 +13,6 @@ model User {
   group          Group[]
   id             String   @id @default(cuid())
   lastName       String
-  notes          Note[]
   password       String
   profilePicture String?
   roles          String[]
@@ -25,13 +24,9 @@ model Note {
   createdAt DateTime          @default(now())
   desc      String
   dueDate   DateTime?
-  group     Group?            @relation(fields: [groupId], references: [id])
-  groupId   String?
+  group     Group             @relation(fields: [groupId], references: [id])
+  groupId   String
   id        String            @id @default(cuid())
-  note      Note?             @relation(name: "NoteOnNotes", fields: [noteId], references: [id])
-  noteId    String?
-  notes     Note[]            @relation(name: "NoteOnNotes")
-  owner     User[]
   severity  EnumNoteSeverity?
   status    EnumNoteStatus?
   title     String

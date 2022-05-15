@@ -20,9 +20,6 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
-import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
-import { NoteCreateNestedManyWithoutNotesInput } from "./NoteCreateNestedManyWithoutNotesInput";
-import { UserCreateNestedManyWithoutNotesInput } from "./UserCreateNestedManyWithoutNotesInput";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
 import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
@@ -47,52 +44,13 @@ class NoteCreateInput {
   dueDate?: Date | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => GroupWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => GroupWhereUniqueInput)
-  @IsOptional()
-  @Field(() => GroupWhereUniqueInput, {
-    nullable: true,
-  })
-  group?: GroupWhereUniqueInput | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => NoteWhereUniqueInput)
-  @IsOptional()
-  @Field(() => NoteWhereUniqueInput, {
-    nullable: true,
-  })
-  note?: NoteWhereUniqueInput | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteCreateNestedManyWithoutNotesInput,
-  })
-  @ValidateNested()
-  @Type(() => NoteCreateNestedManyWithoutNotesInput)
-  @IsOptional()
-  @Field(() => NoteCreateNestedManyWithoutNotesInput, {
-    nullable: true,
-  })
-  notes?: NoteCreateNestedManyWithoutNotesInput;
-
-  @ApiProperty({
-    required: true,
-    type: () => UserCreateNestedManyWithoutNotesInput,
-  })
-  @ValidateNested()
-  @Type(() => UserCreateNestedManyWithoutNotesInput)
-  @IsOptional()
-  @Field(() => UserCreateNestedManyWithoutNotesInput, {
-    nullable: true,
-  })
-  owner?: UserCreateNestedManyWithoutNotesInput;
+  @Field(() => GroupWhereUniqueInput)
+  group!: GroupWhereUniqueInput;
 
   @ApiProperty({
     required: false,

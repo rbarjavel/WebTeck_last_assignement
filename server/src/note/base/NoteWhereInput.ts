@@ -16,9 +16,6 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
-import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
-import { NoteListRelationFilter } from "./NoteListRelationFilter";
-import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
 import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
@@ -56,42 +53,6 @@ class NoteWhereInput {
     nullable: true,
   })
   id?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => NoteWhereUniqueInput)
-  @IsOptional()
-  @Field(() => NoteWhereUniqueInput, {
-    nullable: true,
-  })
-  note?: NoteWhereUniqueInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => NoteListRelationFilter)
-  @IsOptional()
-  @Field(() => NoteListRelationFilter, {
-    nullable: true,
-  })
-  notes?: NoteListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => UserListRelationFilter)
-  @IsOptional()
-  @Field(() => UserListRelationFilter, {
-    nullable: true,
-  })
-  owner?: UserListRelationFilter;
 
   @ApiProperty({
     required: false,

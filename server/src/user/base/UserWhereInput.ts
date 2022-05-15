@@ -15,7 +15,6 @@ import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { GroupListRelationFilter } from "../../group/base/GroupListRelationFilter";
-import { NoteListRelationFilter } from "../../note/base/NoteListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 @InputType()
 class UserWhereInput {
@@ -63,18 +62,6 @@ class UserWhereInput {
     nullable: true,
   })
   lastName?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => NoteListRelationFilter)
-  @IsOptional()
-  @Field(() => NoteListRelationFilter, {
-    nullable: true,
-  })
-  notes?: NoteListRelationFilter;
 
   @ApiProperty({
     required: false,

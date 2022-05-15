@@ -8,13 +8,9 @@ import {
   DateTimeInput,
   ReferenceInput,
   SelectInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
 } from "react-admin";
 
 import { GroupTitle } from "../group/GroupTitle";
-import { NoteTitle } from "./NoteTitle";
-import { UserTitle } from "../user/UserTitle";
 
 export const NoteEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -25,25 +21,6 @@ export const NoteEdit = (props: EditProps): React.ReactElement => {
         <ReferenceInput source="group.id" reference="Group" label="group">
           <SelectInput optionText={GroupTitle} />
         </ReferenceInput>
-        <ReferenceInput source="note.id" reference="Note" label="Note">
-          <SelectInput optionText={NoteTitle} />
-        </ReferenceInput>
-        <ReferenceArrayInput
-          source="notes"
-          reference="Note"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={NoteTitle} />
-        </ReferenceArrayInput>
-        <ReferenceArrayInput
-          source="owner"
-          reference="User"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={UserTitle} />
-        </ReferenceArrayInput>
         <SelectInput
           source="severity"
           label="Severity"

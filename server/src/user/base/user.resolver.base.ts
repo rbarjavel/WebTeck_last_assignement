@@ -28,8 +28,6 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
 import { GroupFindManyArgs } from "../../group/base/GroupFindManyArgs";
 import { Group } from "../../group/base/Group";
-import { NoteFindManyArgs } from "../../note/base/NoteFindManyArgs";
-import { Note } from "../../note/base/Note";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -143,26 +141,6 @@ export class UserResolverBase {
     @graphql.Args() args: GroupFindManyArgs
   ): Promise<Group[]> {
     const results = await this.service.findGroup(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Note])
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "read",
-    possession: "any",
-  })
-  async notes(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: NoteFindManyArgs
-  ): Promise<Note[]> {
-    const results = await this.service.findNotes(parent.id, args);
 
     if (!results) {
       return [];

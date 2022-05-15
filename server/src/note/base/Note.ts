@@ -20,7 +20,6 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Group } from "../../group/base/Group";
-import { User } from "../../user/base/User";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
 import { EnumNoteStatus } from "./EnumNoteStatus";
 @ObjectType()
@@ -53,13 +52,12 @@ class Note {
   dueDate!: Date | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: () => Group,
   })
   @ValidateNested()
   @Type(() => Group)
-  @IsOptional()
-  group?: Group | null;
+  group?: Group;
 
   @ApiProperty({
     required: true,
@@ -68,33 +66,6 @@ class Note {
   @IsString()
   @Field(() => String)
   id!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => Note,
-  })
-  @ValidateNested()
-  @Type(() => Note)
-  @IsOptional()
-  note?: Note | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Note],
-  })
-  @ValidateNested()
-  @Type(() => Note)
-  @IsOptional()
-  notes?: Array<Note>;
-
-  @ApiProperty({
-    required: true,
-    type: () => [User],
-  })
-  @ValidateNested()
-  @Type(() => User)
-  @IsOptional()
-  owner?: Array<User>;
 
   @ApiProperty({
     required: false,
