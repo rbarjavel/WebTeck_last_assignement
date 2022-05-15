@@ -26,9 +26,10 @@ import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { GroupFindManyArgs } from "../../group/base/GroupFindManyArgs";
+import { Group } from "../../group/base/Group";
 import { NoteFindManyArgs } from "../../note/base/NoteFindManyArgs";
 import { Note } from "../../note/base/Note";
-import { Group } from "../../group/base/Group";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -84,15 +85,7 @@ export class UserResolverBase {
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        group: args.data.group
-          ? {
-              connect: args.data.group,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -107,15 +100,7 @@ export class UserResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          group: args.data.group
-            ? {
-                connect: args.data.group,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -147,6 +132,26 @@ export class UserResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Group])
+  @nestAccessControl.UseRoles({
+    resource: "Group",
+    action: "read",
+    possession: "any",
+  })
+  async group(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: GroupFindManyArgs
+  ): Promise<Group[]> {
+    const results = await this.service.findGroup(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Note])
   @nestAccessControl.UseRoles({
     resource: "Note",
@@ -164,21 +169,5 @@ export class UserResolverBase {
     }
 
     return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Group, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "any",
-  })
-  async group(@graphql.Parent() parent: User): Promise<Group | null> {
-    const result = await this.service.getGroup(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
   }
 }

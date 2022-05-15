@@ -314,13 +314,6 @@ export class GroupControllerBase {
       select: {
         createdAt: true,
         firstName: true,
-
-        group: {
-          select: {
-            id: true,
-          },
-        },
-
         id: true,
         lastName: true,
         profilePicture: true,

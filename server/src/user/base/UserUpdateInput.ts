@@ -12,7 +12,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
+import { GroupUpdateManyWithoutUsersInput } from "./GroupUpdateManyWithoutUsersInput";
 import { Type } from "class-transformer";
 import { NoteUpdateManyWithoutUsersInput } from "./NoteUpdateManyWithoutUsersInput";
 @InputType()
@@ -30,15 +30,15 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => GroupWhereUniqueInput,
+    type: () => GroupUpdateManyWithoutUsersInput,
   })
   @ValidateNested()
-  @Type(() => GroupWhereUniqueInput)
+  @Type(() => GroupUpdateManyWithoutUsersInput)
   @IsOptional()
-  @Field(() => GroupWhereUniqueInput, {
+  @Field(() => GroupUpdateManyWithoutUsersInput, {
     nullable: true,
   })
-  group?: GroupWhereUniqueInput | null;
+  group?: GroupUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,

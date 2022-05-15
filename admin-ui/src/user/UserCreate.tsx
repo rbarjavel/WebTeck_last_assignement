@@ -5,8 +5,6 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
-  ReferenceInput,
-  SelectInput,
   ReferenceArrayInput,
   SelectArrayInput,
   PasswordInput,
@@ -21,9 +19,14 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="First Name" source="firstName" />
-        <ReferenceInput source="group.id" reference="Group" label="group">
-          <SelectInput optionText={GroupTitle} />
-        </ReferenceInput>
+        <ReferenceArrayInput
+          source="group"
+          reference="Group"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={GroupTitle} />
+        </ReferenceArrayInput>
         <TextInput label="Last Name" source="lastName" />
         <ReferenceArrayInput
           source="notes"

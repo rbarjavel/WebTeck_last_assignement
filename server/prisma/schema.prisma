@@ -10,8 +10,7 @@ generator client {
 model User {
   createdAt      DateTime @default(now())
   firstName      String
-  group          Group?   @relation(fields: [groupId], references: [id])
-  groupId        String?
+  group          Group[]
   id             String   @id @default(cuid())
   lastName       String
   notes          Note[]
