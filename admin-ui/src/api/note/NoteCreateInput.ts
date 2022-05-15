@@ -4,7 +4,7 @@ export type NoteCreateInput = {
   desc: string;
   dueDate?: Date | null;
   group: GroupWhereUniqueInput;
-  severity?: string | null;
+  severity: string;
   status: string;
   title: string;
 };

@@ -60,15 +60,12 @@ class Note {
   id!: string;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  severity!: string | null;
+  @Field(() => String)
+  severity!: string;
 
   @ApiProperty({
     required: true,
