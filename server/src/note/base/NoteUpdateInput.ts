@@ -59,7 +59,7 @@ class NoteUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  severity?: string | null;
+  severity?: string;
 
   @ApiProperty({
     required: false,

@@ -27,7 +27,7 @@ model Note {
   group     Group     @relation(fields: [groupId], references: [id])
   groupId   String
   id        String    @id @default(cuid())
-  severity  String?
+  severity  String
   status    String
   title     String
   updatedAt DateTime  @updatedAt

@@ -16,7 +16,6 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
 @InputType()
 class NoteWhereInput {
   @ApiProperty({
@@ -55,14 +54,14 @@ class NoteWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: StringFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => StringFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => StringFilter, {
     nullable: true,
   })
-  severity?: StringNullableFilter;
+  severity?: StringFilter;
 
   @ApiProperty({
     required: false,

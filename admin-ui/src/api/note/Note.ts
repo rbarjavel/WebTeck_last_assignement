@@ -6,7 +6,7 @@ export type Note = {
   dueDate: Date | null;
   group?: Group;
   id: string;
-  severity: string | null;
+  severity: string;
   status: string;
   title: string;
   updatedAt: Date;
