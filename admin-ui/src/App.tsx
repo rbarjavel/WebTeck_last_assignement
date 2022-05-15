@@ -9,14 +9,6 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { NoteList } from "./note/NoteList";
-import { NoteCreate } from "./note/NoteCreate";
-import { NoteEdit } from "./note/NoteEdit";
-import { NoteShow } from "./note/NoteShow";
-import { GroupList } from "./group/GroupList";
-import { GroupCreate } from "./group/GroupCreate";
-import { GroupEdit } from "./group/GroupEdit";
-import { GroupShow } from "./group/GroupShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -36,7 +28,7 @@ const App = (): React.ReactElement => {
   return (
     <div className="App">
       <Admin
-        title={"Last Assignement Webteck "}
+        title={"My app"}
         dataProvider={dataProvider}
         authProvider={jwtAuthProvider}
         theme={theme}
@@ -49,20 +41,6 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
-        />
-        <Resource
-          name="Note"
-          list={NoteList}
-          edit={NoteEdit}
-          create={NoteCreate}
-          show={NoteShow}
-        />
-        <Resource
-          name="Group"
-          list={GroupList}
-          edit={GroupEdit}
-          create={GroupCreate}
-          show={GroupShow}
         />
       </Admin>
     </div>

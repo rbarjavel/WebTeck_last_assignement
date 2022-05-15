@@ -1,12 +1,9 @@
-import { StringFilter } from "../../util/StringFilter";
-import { GroupListRelationFilter } from "../group/GroupListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { StringFilter } from "../../util/StringFilter";
 
 export type UserWhereInput = {
-  firstName?: StringFilter;
-  group?: GroupListRelationFilter;
+  firstName?: StringNullableFilter;
   id?: StringFilter;
-  lastName?: StringFilter;
-  profilePicture?: StringNullableFilter;
+  lastName?: StringNullableFilter;
   username?: StringFilter;
 };

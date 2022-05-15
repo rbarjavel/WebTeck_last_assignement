@@ -1,12 +1,8 @@
-import { Group } from "../group/Group";
-
 export type User = {
   createdAt: Date;
-  firstName: string;
-  group?: Array<Group>;
+  firstName: string | null;
   id: string;
-  lastName: string;
-  profilePicture: string | null;
+  lastName: string | null;
   roles: Array<string>;
   updatedAt: Date;
   username: string;

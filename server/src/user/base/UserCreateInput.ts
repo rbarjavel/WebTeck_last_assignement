@@ -11,46 +11,19 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, ValidateNested, IsOptional } from "class-validator";
-import { GroupCreateNestedManyWithoutUsersInput } from "./GroupCreateNestedManyWithoutUsersInput";
-import { Type } from "class-transformer";
+import { IsString, IsOptional } from "class-validator";
 @InputType()
 class UserCreateInput {
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  firstName!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => GroupCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => GroupCreateNestedManyWithoutUsersInput)
   @IsOptional()
-  @Field(() => GroupCreateNestedManyWithoutUsersInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  group?: GroupCreateNestedManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  lastName!: string;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  password!: string;
+  firstName?: string | null;
 
   @ApiProperty({
     required: false,
@@ -61,7 +34,15 @@ class UserCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  profilePicture?: string | null;
+  lastName?: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  password!: string;
 
   @ApiProperty({
     required: true,

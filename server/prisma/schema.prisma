@@ -8,36 +8,12 @@ generator client {
 }
 
 model User {
-  createdAt      DateTime @default(now())
-  firstName      String
-  group          Group[]
-  id             String   @id @default(cuid())
-  lastName       String
-  password       String
-  profilePicture String?
-  roles          String[]
-  updatedAt      DateTime @updatedAt
-  username       String   @unique
-}
-
-model Note {
-  createdAt DateTime  @default(now())
-  desc      String
-  dueDate   DateTime?
-  group     Group     @relation(fields: [groupId], references: [id])
-  groupId   String
-  id        String    @id @default(cuid())
-  severity  String
-  status    String
-  title     String
-  updatedAt DateTime  @updatedAt
-}
-
-model Group {
   createdAt DateTime @default(now())
+  firstName String?
   id        String   @id @default(cuid())
-  name      String
-  notes     Note[]
+  lastName  String?
+  password  String
+  roles     String[]
   updatedAt DateTime @updatedAt
-  users     User[]
+  username  String   @unique
 }

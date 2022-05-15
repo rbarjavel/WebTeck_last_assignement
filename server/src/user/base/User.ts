@@ -11,9 +11,8 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, ValidateNested, IsOptional } from "class-validator";
+import { IsDate, IsString, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { Group } from "../../group/base/Group";
 @ObjectType()
 class User {
   @ApiProperty({
@@ -25,21 +24,15 @@ class User {
   createdAt!: Date;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  firstName!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Group],
-  })
-  @ValidateNested()
-  @Type(() => Group)
   @IsOptional()
-  group?: Array<Group>;
+  @Field(() => String, {
+    nullable: true,
+  })
+  firstName!: string | null;
 
   @ApiProperty({
     required: true,
@@ -50,14 +43,6 @@ class User {
   id!: string;
 
   @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  lastName!: string;
-
-  @ApiProperty({
     required: false,
     type: String,
   })
@@ -66,7 +51,7 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  profilePicture!: string | null;
+  lastName!: string | null;
 
   @ApiProperty({
     required: true,
