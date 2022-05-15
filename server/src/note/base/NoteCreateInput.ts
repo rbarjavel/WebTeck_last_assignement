@@ -11,17 +11,9 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsString,
-  IsDate,
-  IsOptional,
-  ValidateNested,
-  IsEnum,
-} from "class-validator";
+import { IsString, IsDate, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
-import { EnumNoteSeverity } from "./EnumNoteSeverity";
-import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteCreateInput {
   @ApiProperty({
@@ -54,22 +46,22 @@ class NoteCreateInput {
 
   @ApiProperty({
     required: false,
-    enum: EnumNoteSeverity,
+    type: String,
   })
-  @IsEnum(EnumNoteSeverity)
+  @IsString()
   @IsOptional()
-  @Field(() => EnumNoteSeverity, {
+  @Field(() => String, {
     nullable: true,
   })
-  severity?: "Low" | "Moderate" | "High" | null;
+  severity?: string | null;
 
   @ApiProperty({
     required: true,
-    enum: EnumNoteStatus,
+    type: String,
   })
-  @IsEnum(EnumNoteStatus)
-  @Field(() => EnumNoteStatus)
-  status!: "ToDo" | "Done";
+  @IsString()
+  @Field(() => String)
+  status!: string;
 
   @ApiProperty({
     required: true,

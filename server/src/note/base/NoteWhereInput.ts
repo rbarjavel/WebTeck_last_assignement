@@ -13,11 +13,10 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
-import { EnumNoteSeverity } from "./EnumNoteSeverity";
-import { EnumNoteStatus } from "./EnumNoteStatus";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 @InputType()
 class NoteWhereInput {
   @ApiProperty({
@@ -56,25 +55,25 @@ class NoteWhereInput {
 
   @ApiProperty({
     required: false,
-    enum: EnumNoteSeverity,
+    type: StringNullableFilter,
   })
-  @IsEnum(EnumNoteSeverity)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => EnumNoteSeverity, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  severity?: "Low" | "Moderate" | "High";
+  severity?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
-    enum: EnumNoteStatus,
+    type: StringFilter,
   })
-  @IsEnum(EnumNoteStatus)
+  @Type(() => StringFilter)
   @IsOptional()
-  @Field(() => EnumNoteStatus, {
+  @Field(() => StringFilter, {
     nullable: true,
   })
-  status?: "ToDo" | "Done";
+  status?: StringFilter;
 
   @ApiProperty({
     required: false,

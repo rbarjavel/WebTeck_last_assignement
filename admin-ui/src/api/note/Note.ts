@@ -6,8 +6,8 @@ export type Note = {
   dueDate: Date | null;
   group?: Group;
   id: string;
-  severity?: "Low" | "Moderate" | "High" | null;
-  status?: "ToDo" | "Done";
+  severity: string | null;
+  status: string;
   title: string;
   updatedAt: Date;
 };
