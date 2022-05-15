@@ -19,6 +19,7 @@ import {
   IsEnum,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { Group } from "../../group/base/Group";
 import { User } from "../../user/base/User";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
 import { EnumNoteStatus } from "./EnumNoteStatus";
@@ -50,6 +51,15 @@ class Note {
     nullable: true,
   })
   dueDate!: Date | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Group,
+  })
+  @ValidateNested()
+  @Type(() => Group)
+  @IsOptional()
+  group?: Group | null;
 
   @ApiProperty({
     required: true,

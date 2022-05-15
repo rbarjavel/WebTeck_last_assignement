@@ -4,6 +4,7 @@ export type NoteOrderByInput = {
   createdAt?: SortOrder;
   desc?: SortOrder;
   dueDate?: SortOrder;
+  groupId?: SortOrder;
   id?: SortOrder;
   noteId?: SortOrder;
   severity?: SortOrder;

@@ -52,6 +52,12 @@ export class NoteControllerBase {
       data: {
         ...data,
 
+        group: data.group
+          ? {
+              connect: data.group,
+            }
+          : undefined,
+
         note: data.note
           ? {
               connect: data.note,
@@ -62,6 +68,13 @@ export class NoteControllerBase {
         createdAt: true,
         desc: true,
         dueDate: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
 
         note: {
@@ -96,6 +109,13 @@ export class NoteControllerBase {
         createdAt: true,
         desc: true,
         dueDate: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
 
         note: {
@@ -131,6 +151,13 @@ export class NoteControllerBase {
         createdAt: true,
         desc: true,
         dueDate: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
 
         note: {
@@ -173,6 +200,12 @@ export class NoteControllerBase {
         data: {
           ...data,
 
+          group: data.group
+            ? {
+                connect: data.group,
+              }
+            : undefined,
+
           note: data.note
             ? {
                 connect: data.note,
@@ -183,6 +216,13 @@ export class NoteControllerBase {
           createdAt: true,
           desc: true,
           dueDate: true,
+
+          group: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
 
           note: {
@@ -226,6 +266,13 @@ export class NoteControllerBase {
           createdAt: true,
           desc: true,
           dueDate: true,
+
+          group: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
 
           note: {
@@ -269,6 +316,13 @@ export class NoteControllerBase {
         createdAt: true,
         desc: true,
         dueDate: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
 
         note: {
@@ -375,6 +429,13 @@ export class NoteControllerBase {
       select: {
         createdAt: true,
         firstName: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         lastName: true,
         profilePicture: true,

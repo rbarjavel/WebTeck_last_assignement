@@ -1,3 +1,4 @@
+import { GroupWhereUniqueInput } from "../group/GroupWhereUniqueInput";
 import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteUpdateManyWithoutNotesInput } from "./NoteUpdateManyWithoutNotesInput";
 import { UserUpdateManyWithoutNotesInput } from "./UserUpdateManyWithoutNotesInput";
@@ -5,6 +6,7 @@ import { UserUpdateManyWithoutNotesInput } from "./UserUpdateManyWithoutNotesInp
 export type NoteUpdateInput = {
   desc?: string;
   dueDate?: Date | null;
+  group?: GroupWhereUniqueInput | null;
   note?: NoteWhereUniqueInput | null;
   notes?: NoteUpdateManyWithoutNotesInput;
   owner?: UserUpdateManyWithoutNotesInput;

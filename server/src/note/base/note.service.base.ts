@@ -10,7 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Note, User } from "@prisma/client";
+import { Prisma, Note, User, Group } from "@prisma/client";
 
 export class NoteServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -67,6 +67,14 @@ export class NoteServiceBase {
         where: { id: parentId },
       })
       .owner(args);
+  }
+
+  async getGroup(parentId: string): Promise<Group | null> {
+    return this.prisma.note
+      .findUnique({
+        where: { id: parentId },
+      })
+      .group();
   }
 
   async getNote(parentId: string): Promise<Note | null> {

@@ -28,6 +28,7 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
 import { NoteFindManyArgs } from "../../note/base/NoteFindManyArgs";
 import { Note } from "../../note/base/Note";
+import { Group } from "../../group/base/Group";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -83,7 +84,15 @@ export class UserResolverBase {
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        group: args.data.group
+          ? {
+              connect: args.data.group,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -98,7 +107,15 @@ export class UserResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          group: args.data.group
+            ? {
+                connect: args.data.group,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -147,5 +164,21 @@ export class UserResolverBase {
     }
 
     return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Group, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Group",
+    action: "read",
+    possession: "any",
+  })
+  async group(@graphql.Parent() parent: User): Promise<Group | null> {
+    const result = await this.service.getGroup(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

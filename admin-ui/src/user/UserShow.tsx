@@ -5,7 +5,9 @@ import {
   ShowProps,
   DateField,
   TextField,
+  ReferenceField,
 } from "react-admin";
+import { GROUP_TITLE_FIELD } from "../group/GroupTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -13,6 +15,9 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
         <TextField label="First Name" source="firstName" />
+        <ReferenceField label="group" source="group.id" reference="Group">
+          <TextField source={GROUP_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="ID" source="id" />
         <TextField label="Last Name" source="lastName" />
         <TextField label="ProfilePicture" source="profilePicture" />
