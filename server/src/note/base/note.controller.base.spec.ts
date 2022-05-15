@@ -15,6 +15,8 @@ const CREATE_INPUT = {
   desc: "exampleDesc",
   dueDate: new Date(),
   id: "exampleId",
+  severity: "exampleSeverity",
+  status: "exampleStatus",
   title: "exampleTitle",
   updatedAt: new Date(),
 };
@@ -23,6 +25,8 @@ const CREATE_RESULT = {
   desc: "exampleDesc",
   dueDate: new Date(),
   id: "exampleId",
+  severity: "exampleSeverity",
+  status: "exampleStatus",
   title: "exampleTitle",
   updatedAt: new Date(),
 };
@@ -32,6 +36,8 @@ const FIND_MANY_RESULT = [
     desc: "exampleDesc",
     dueDate: new Date(),
     id: "exampleId",
+    severity: "exampleSeverity",
+    status: "exampleStatus",
     title: "exampleTitle",
     updatedAt: new Date(),
   },
@@ -41,6 +47,8 @@ const FIND_ONE_RESULT = {
   desc: "exampleDesc",
   dueDate: new Date(),
   id: "exampleId",
+  severity: "exampleSeverity",
+  status: "exampleStatus",
   title: "exampleTitle",
   updatedAt: new Date(),
 };

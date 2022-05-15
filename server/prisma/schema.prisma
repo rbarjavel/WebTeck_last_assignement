@@ -21,16 +21,16 @@ model User {
 }
 
 model Note {
-  createdAt DateTime          @default(now())
+  createdAt DateTime  @default(now())
   desc      String
   dueDate   DateTime?
-  group     Group             @relation(fields: [groupId], references: [id])
+  group     Group     @relation(fields: [groupId], references: [id])
   groupId   String
-  id        String            @id @default(cuid())
-  severity  EnumNoteSeverity?
-  status    EnumNoteStatus
+  id        String    @id @default(cuid())
+  severity  String?
+  status    String
   title     String
-  updatedAt DateTime          @updatedAt
+  updatedAt DateTime  @updatedAt
 }
 
 model Group {
@@ -40,15 +40,4 @@ model Group {
   notes     Note[]
   updatedAt DateTime @updatedAt
   users     User[]
-}
-
-enum EnumNoteSeverity {
-  Low
-  Moderate
-  High
-}
-
-enum EnumNoteStatus {
-  ToDo
-  Done
 }
