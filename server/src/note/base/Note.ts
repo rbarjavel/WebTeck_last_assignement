@@ -71,16 +71,12 @@ class Note {
   @ApiProperty({
     required: true,
     enum: EnumNoteServerity,
-    isArray: true,
   })
-  @IsEnum(EnumNoteServerity, {
-    each: true,
-  })
-  @IsOptional()
-  @Field(() => [EnumNoteServerity], {
+  @IsEnum(EnumNoteServerity)
+  @Field(() => EnumNoteServerity, {
     nullable: true,
   })
-  serverity?: Array<"Low" | "Medium" | "High">;
+  serverity?: "Low" | "Medium" | "High";
 
   @ApiProperty({
     required: true,

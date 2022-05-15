@@ -61,16 +61,13 @@ class NoteUpdateInput {
   @ApiProperty({
     required: false,
     enum: EnumNoteServerity,
-    isArray: true,
   })
-  @IsEnum(EnumNoteServerity, {
-    each: true,
-  })
+  @IsEnum(EnumNoteServerity)
   @IsOptional()
-  @Field(() => [EnumNoteServerity], {
+  @Field(() => EnumNoteServerity, {
     nullable: true,
   })
-  serverity?: Array<"Low" | "Medium" | "High">;
+  serverity?: "Low" | "Medium" | "High";
 
   @ApiProperty({
     required: false,
