@@ -17,8 +17,8 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import { Public } from "../../decorators/public.decorator";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateGroupArgs } from "./CreateGroupArgs";
 import { UpdateGroupArgs } from "./UpdateGroupArgs";
 import { DeleteGroupArgs } from "./DeleteGroupArgs";
@@ -37,12 +37,8 @@ export class GroupResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "any",
-  })
   async _groupsMeta(
     @graphql.Args() args: GroupFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -56,24 +52,14 @@ export class GroupResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Group])
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "any",
-  })
   async groups(@graphql.Args() args: GroupFindManyArgs): Promise<Group[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Group, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "own",
-  })
   async group(
     @graphql.Args() args: GroupFindUniqueArgs
   ): Promise<Group | null> {
@@ -84,13 +70,8 @@ export class GroupResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Group)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "create",
-    possession: "any",
-  })
   async createGroup(@graphql.Args() args: CreateGroupArgs): Promise<Group> {
     return await this.service.create({
       ...args,
@@ -98,13 +79,8 @@ export class GroupResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Group)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "update",
-    possession: "any",
-  })
   async updateGroup(
     @graphql.Args() args: UpdateGroupArgs
   ): Promise<Group | null> {
@@ -123,12 +99,8 @@ export class GroupResolverBase {
     }
   }
 
+  @Public()
   @graphql.Mutation(() => Group)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "delete",
-    possession: "any",
-  })
   async deleteGroup(
     @graphql.Args() args: DeleteGroupArgs
   ): Promise<Group | null> {

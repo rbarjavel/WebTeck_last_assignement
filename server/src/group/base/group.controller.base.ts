@@ -19,7 +19,7 @@ import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { GroupService } from "../group.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { GroupCreateInput } from "./GroupCreateInput";
 import { GroupWhereInput } from "./GroupWhereInput";
@@ -38,12 +38,7 @@ export class GroupControllerBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "create",
-    possession: "any",
-  })
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Group })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -59,12 +54,7 @@ export class GroupControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "any",
-  })
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Group] })
   @swagger.ApiForbiddenResponse()
@@ -82,12 +72,7 @@ export class GroupControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "own",
-  })
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Group })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -112,12 +97,7 @@ export class GroupControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "update",
-    possession: "any",
-  })
+  @Public()
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Group })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -147,11 +127,7 @@ export class GroupControllerBase {
     }
   }
 
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "delete",
-    possession: "any",
-  })
+  @Public()
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Group })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -212,11 +188,7 @@ export class GroupControllerBase {
     return results;
   }
 
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "update",
-    possession: "any",
-  })
+  @Public()
   @common.Post("/:id/users")
   async connectUsers(
     @common.Param() params: GroupWhereUniqueInput,
@@ -234,11 +206,7 @@ export class GroupControllerBase {
     });
   }
 
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "update",
-    possession: "any",
-  })
+  @Public()
   @common.Patch("/:id/users")
   async updateUsers(
     @common.Param() params: GroupWhereUniqueInput,
@@ -256,11 +224,7 @@ export class GroupControllerBase {
     });
   }
 
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "update",
-    possession: "any",
-  })
+  @Public()
   @common.Delete("/:id/users")
   async disconnectUsers(
     @common.Param() params: GroupWhereUniqueInput,
