@@ -15,10 +15,10 @@ import * as apollo from "apollo-server-express";
 import * as nestAccessControl from "nest-access-control";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
-import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
-import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateNoteArgs } from "./CreateNoteArgs";
 import { UpdateNoteArgs } from "./UpdateNoteArgs";
 import { DeleteNoteArgs } from "./DeleteNoteArgs";
@@ -56,81 +56,40 @@ export class NoteResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Note])
   @nestAccessControl.UseRoles({
     resource: "Note",
     action: "read",
     possession: "any",
   })
-  async notes(
-    @graphql.Args() args: NoteFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Note[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Note",
-    });
-    const results = await this.service.findMany(args);
-    return results.map((result) => permission.filter(result));
+  async notes(@graphql.Args() args: NoteFindManyArgs): Promise<Note[]> {
+    return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Note, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "Note",
     action: "read",
     possession: "own",
   })
-  async note(
-    @graphql.Args() args: NoteFindUniqueArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Note | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "own",
-      resource: "Note",
-    });
+  async note(@graphql.Args() args: NoteFindUniqueArgs): Promise<Note | null> {
     const result = await this.service.findOne(args);
     if (result === null) {
       return null;
     }
-    return permission.filter(result);
+    return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Note)
   @nestAccessControl.UseRoles({
     resource: "Note",
     action: "create",
     possession: "any",
   })
-  async createNote(
-    @graphql.Args() args: CreateNoteArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Note> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "create",
-      possession: "any",
-      resource: "Note",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(
-      permission,
-      args.data
-    );
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"Note"} creation is forbidden for roles: ${roles}`
-      );
-    }
-    // @ts-ignore
+  async createNote(@graphql.Args() args: CreateNoteArgs): Promise<Note> {
     return await this.service.create({
       ...args,
       data: {
@@ -145,39 +104,15 @@ export class NoteResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Note)
   @nestAccessControl.UseRoles({
     resource: "Note",
     action: "update",
     possession: "any",
   })
-  async updateNote(
-    @graphql.Args() args: UpdateNoteArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Note | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Note",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(
-      permission,
-      args.data
-    );
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"Note"} update is forbidden for roles: ${roles}`
-      );
-    }
+  async updateNote(@graphql.Args() args: UpdateNoteArgs): Promise<Note | null> {
     try {
-      // @ts-ignore
       return await this.service.update({
         ...args,
         data: {
@@ -208,7 +143,6 @@ export class NoteResolverBase {
   })
   async deleteNote(@graphql.Args() args: DeleteNoteArgs): Promise<Note | null> {
     try {
-      // @ts-ignore
       return await this.service.delete(args);
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -220,6 +154,7 @@ export class NoteResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Note])
   @nestAccessControl.UseRoles({
     resource: "Note",
@@ -228,71 +163,50 @@ export class NoteResolverBase {
   })
   async notes(
     @graphql.Parent() parent: Note,
-    @graphql.Args() args: NoteFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: NoteFindManyArgs
   ): Promise<Note[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Note",
-    });
     const results = await this.service.findNotes(parent.id, args);
 
     if (!results) {
       return [];
     }
 
-    return results.map((result) => permission.filter(result));
+    return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User])
   @nestAccessControl.UseRoles({
-    resource: "Note",
+    resource: "User",
     action: "read",
     possession: "any",
   })
   async owner(
     @graphql.Parent() parent: Note,
-    @graphql.Args() args: UserFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: UserFindManyArgs
   ): Promise<User[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "User",
-    });
     const results = await this.service.findOwner(parent.id, args);
 
     if (!results) {
       return [];
     }
 
-    return results.map((result) => permission.filter(result));
+    return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Note, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "Note",
     action: "read",
     possession: "any",
   })
-  async note(
-    @graphql.Parent() parent: Note,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Note | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Note",
-    });
+  async note(@graphql.Parent() parent: Note): Promise<Note | null> {
     const result = await this.service.getNote(parent.id);
 
     if (!result) {
       return null;
     }
-    return permission.filter(result);
+    return result;
   }
 }

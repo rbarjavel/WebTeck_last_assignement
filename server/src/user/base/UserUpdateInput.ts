@@ -25,7 +25,7 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  firstName?: string | null;
+  firstName?: string;
 
   @ApiProperty({
     required: false,
@@ -36,7 +36,7 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  lastName?: string | null;
+  lastName?: string;
 
   @ApiProperty({
     required: false,
