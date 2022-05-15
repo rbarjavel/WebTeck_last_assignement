@@ -5,6 +5,6 @@ export type NoteCreateInput = {
   dueDate?: Date | null;
   group: GroupWhereUniqueInput;
   severity?: "Low" | "Moderate" | "High" | null;
-  status?: "ToDo" | "Done" | null;
+  status: "ToDo" | "Done";
   title: string;
 };

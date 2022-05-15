@@ -78,7 +78,7 @@ class NoteUpdateInput {
   @Field(() => EnumNoteStatus, {
     nullable: true,
   })
-  status?: "ToDo" | "Done" | null;
+  status?: "ToDo" | "Done";
 
   @ApiProperty({
     required: false,
