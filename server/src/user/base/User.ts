@@ -35,12 +35,12 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => Group,
+    type: () => [Group],
   })
   @ValidateNested()
   @Type(() => Group)
   @IsOptional()
-  group?: Group | null;
+  group?: Array<Group>;
 
   @ApiProperty({
     required: true,

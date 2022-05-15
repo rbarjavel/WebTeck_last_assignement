@@ -10,7 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, User, Note, Group } from "@prisma/client";
+import { Prisma, User, Group, Note } from "@prisma/client";
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -72,6 +72,17 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
+  async findGroup(
+    parentId: string,
+    args: Prisma.GroupFindManyArgs
+  ): Promise<Group[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .group(args);
+  }
+
   async findNotes(
     parentId: string,
     args: Prisma.NoteFindManyArgs
@@ -81,13 +92,5 @@ export class UserServiceBase {
         where: { id: parentId },
       })
       .notes(args);
-  }
-
-  async getGroup(parentId: string): Promise<Group | null> {
-    return this.prisma.user
-      .findUnique({
-        where: { id: parentId },
-      })
-      .group();
   }
 }

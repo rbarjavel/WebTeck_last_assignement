@@ -1,9 +1,9 @@
-import { GroupWhereUniqueInput } from "../group/GroupWhereUniqueInput";
+import { GroupUpdateManyWithoutUsersInput } from "./GroupUpdateManyWithoutUsersInput";
 import { NoteUpdateManyWithoutUsersInput } from "./NoteUpdateManyWithoutUsersInput";
 
 export type UserUpdateInput = {
   firstName?: string;
-  group?: GroupWhereUniqueInput | null;
+  group?: GroupUpdateManyWithoutUsersInput;
   lastName?: string;
   notes?: NoteUpdateManyWithoutUsersInput;
   password?: string;

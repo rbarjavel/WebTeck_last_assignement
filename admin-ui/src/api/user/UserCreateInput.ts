@@ -1,9 +1,9 @@
-import { GroupWhereUniqueInput } from "../group/GroupWhereUniqueInput";
+import { GroupCreateNestedManyWithoutUsersInput } from "./GroupCreateNestedManyWithoutUsersInput";
 import { NoteCreateNestedManyWithoutUsersInput } from "./NoteCreateNestedManyWithoutUsersInput";
 
 export type UserCreateInput = {
   firstName: string;
-  group?: GroupWhereUniqueInput | null;
+  group?: GroupCreateNestedManyWithoutUsersInput;
   lastName: string;
   notes?: NoteCreateNestedManyWithoutUsersInput;
   password: string;

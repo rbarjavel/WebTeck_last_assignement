@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
+import { GroupListRelationFilter } from "../../group/base/GroupListRelationFilter";
 import { NoteListRelationFilter } from "../../note/base/NoteListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 @InputType()
@@ -32,15 +32,15 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => GroupWhereUniqueInput,
+    type: () => GroupListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => GroupWhereUniqueInput)
+  @Type(() => GroupListRelationFilter)
   @IsOptional()
-  @Field(() => GroupWhereUniqueInput, {
+  @Field(() => GroupListRelationFilter, {
     nullable: true,
   })
-  group?: GroupWhereUniqueInput;
+  group?: GroupListRelationFilter;
 
   @ApiProperty({
     required: false,
