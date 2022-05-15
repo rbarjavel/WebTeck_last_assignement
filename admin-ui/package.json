@@ -1,5 +1,5 @@
 {
-  "name": "@last-assignement-webteck/admin",
+  "name": "@my-app/admin",
   "private": true,
   "dependencies": {
     "@apollo/client": "3.3.18",

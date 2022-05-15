@@ -19,18 +19,14 @@ import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { UserService } from "../user.service";
-import { Public } from "../../decorators/public.decorator";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
-import { GroupFindManyArgs } from "../../group/base/GroupFindManyArgs";
-import { Group } from "../../group/base/Group";
-import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class UserControllerBase {
@@ -39,7 +35,12 @@ export class UserControllerBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
-  @Public()
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "create",
+    possession: "any",
+  })
   @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -51,7 +52,6 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
-        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -78,7 +78,6 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
-        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -86,7 +85,12 @@ export class UserControllerBase {
     });
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "own",
+  })
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -101,7 +105,6 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
-        profilePicture: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -138,7 +141,6 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
-          profilePicture: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -174,7 +176,6 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
-          profilePicture: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -188,101 +189,5 @@ export class UserControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Group",
-    action: "read",
-    possession: "any",
-  })
-  @common.Get("/:id/group")
-  @ApiNestedQuery(GroupFindManyArgs)
-  async findManyGroup(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Group[]> {
-    const query = plainToClass(GroupFindManyArgs, request.query);
-    const results = await this.service.findGroup(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        id: true,
-        name: true,
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  @common.Post("/:id/group")
-  async connectGroup(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: GroupWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      group: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  @common.Patch("/:id/group")
-  async updateGroup(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: GroupWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      group: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  @common.Delete("/:id/group")
-  async disconnectGroup(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: GroupWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      group: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

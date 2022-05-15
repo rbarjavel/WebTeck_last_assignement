@@ -1,18 +1,18 @@
 {
   "dataServiceGeneratorVersion": "0.12.7",
   "appInfo": {
-    "name": "Last Assignement Webteck ",
+    "name": "My app",
     "description": "",
-    "version": "sah85bzo",
-    "id": "cl24yjt0134524401s6wcbkiyho",
-    "url": "https://app.amplication.com/cl24yjt0134524401s6wcbkiyho",
+    "version": "rjs1iozd",
+    "id": "cl37n9rbz50045301s6evfmoc1y",
+    "url": "https://app.amplication.com/cl37n9rbz50045301s6evfmoc1y",
     "settings": {
       "dbHost": "localhost",
       "dbName": "",
       "dbPassword": "admin",
       "dbPort": 5432,
       "dbUser": "admin",
-      "appId": "cl24yjt0134524401s6wcbkiyho",
+      "appId": "cl37n9rbz50045301s6evfmoc1y",
       "authProvider": "Jwt"
     }
   }
