@@ -25,6 +25,8 @@ import { DeleteGroupArgs } from "./DeleteGroupArgs";
 import { GroupFindManyArgs } from "./GroupFindManyArgs";
 import { GroupFindUniqueArgs } from "./GroupFindUniqueArgs";
 import { Group } from "./Group";
+import { NoteFindManyArgs } from "../../note/base/NoteFindManyArgs";
+import { Note } from "../../note/base/Note";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { GroupService } from "../group.service";
@@ -114,6 +116,21 @@ export class GroupResolverBase {
       }
       throw error;
     }
+  }
+
+  @Public()
+  @graphql.ResolveField(() => [Note])
+  async notes(
+    @graphql.Parent() parent: Group,
+    @graphql.Args() args: NoteFindManyArgs
+  ): Promise<Note[]> {
+    const results = await this.service.findNotes(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

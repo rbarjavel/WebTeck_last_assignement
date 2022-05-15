@@ -23,6 +23,32 @@ model Group {
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
   name      String
+  notes     Note[]
   updatedAt DateTime @updatedAt
   users     User[]
+}
+
+model Note {
+  createdAt DateTime            @default(now())
+  desc      String
+  dueDate   DateTime?
+  group     Group?              @relation(fields: [groupId], references: [id])
+  groupId   String?
+  id        String              @id @default(cuid())
+  serverity EnumNoteServerity[]
+  status    EnumNoteStatus
+  title     String
+  updatedAt DateTime            @updatedAt
+}
+
+enum EnumNoteServerity {
+  Low
+  Medium
+  High
+}
+
+enum EnumNoteStatus {
+  ToDo
+  InProgress
+  Done
 }
