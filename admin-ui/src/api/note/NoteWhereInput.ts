@@ -7,6 +7,7 @@ export type NoteWhereInput = {
   dueDate?: DateTimeNullableFilter;
   group?: GroupWhereUniqueInput;
   id?: StringFilter;
+  serverity?: "Low" | "Medium" | "High";
   status?: "ToDo" | "InProgress" | "Done";
   title?: StringFilter;
 };

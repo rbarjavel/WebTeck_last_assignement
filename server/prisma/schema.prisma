@@ -29,16 +29,16 @@ model Group {
 }
 
 model Note {
-  createdAt DateTime            @default(now())
+  createdAt DateTime          @default(now())
   desc      String
   dueDate   DateTime?
-  group     Group?              @relation(fields: [groupId], references: [id])
+  group     Group?            @relation(fields: [groupId], references: [id])
   groupId   String?
-  id        String              @id @default(cuid())
-  serverity EnumNoteServerity[]
+  id        String            @id @default(cuid())
+  serverity EnumNoteServerity
   status    EnumNoteStatus
   title     String
-  updatedAt DateTime            @updatedAt
+  updatedAt DateTime          @updatedAt
 }
 
 enum EnumNoteServerity {

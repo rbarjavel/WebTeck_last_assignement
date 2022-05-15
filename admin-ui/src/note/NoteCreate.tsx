@@ -8,7 +8,6 @@ import {
   DateTimeInput,
   ReferenceInput,
   SelectInput,
-  SelectArrayInput,
 } from "react-admin";
 
 import { GroupTitle } from "../group/GroupTitle";
@@ -22,9 +21,9 @@ export const NoteCreate = (props: CreateProps): React.ReactElement => {
         <ReferenceInput source="group.id" reference="Group" label="group">
           <SelectInput optionText={GroupTitle} />
         </ReferenceInput>
-        <SelectArrayInput
-          label="serverity"
+        <SelectInput
           source="serverity"
+          label="serverity"
           choices={[
             { label: "Low", value: "Low" },
             { label: "Medium", value: "Medium" },

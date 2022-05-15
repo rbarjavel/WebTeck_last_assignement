@@ -6,7 +6,7 @@ export type Note = {
   dueDate: Date | null;
   group?: Group | null;
   id: string;
-  serverity?: Array<"Low" | "Medium" | "High">;
+  serverity?: "Low" | "Medium" | "High";
   status?: "ToDo" | "InProgress" | "Done";
   title: string;
   updatedAt: Date;

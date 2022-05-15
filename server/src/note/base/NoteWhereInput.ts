@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
+import { EnumNoteServerity } from "./EnumNoteServerity";
 import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteWhereInput {
@@ -63,6 +64,17 @@ class NoteWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumNoteServerity,
+  })
+  @IsEnum(EnumNoteServerity)
+  @IsOptional()
+  @Field(() => EnumNoteServerity, {
+    nullable: true,
+  })
+  serverity?: "Low" | "Medium" | "High";
 
   @ApiProperty({
     required: false,
