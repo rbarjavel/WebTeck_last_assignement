@@ -13,6 +13,10 @@ import { NoteList } from "./note/NoteList";
 import { NoteCreate } from "./note/NoteCreate";
 import { NoteEdit } from "./note/NoteEdit";
 import { NoteShow } from "./note/NoteShow";
+import { GroupList } from "./group/GroupList";
+import { GroupCreate } from "./group/GroupCreate";
+import { GroupEdit } from "./group/GroupEdit";
+import { GroupShow } from "./group/GroupShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -52,6 +56,13 @@ const App = (): React.ReactElement => {
           edit={NoteEdit}
           create={NoteCreate}
           show={NoteShow}
+        />
+        <Resource
+          name="Group"
+          list={GroupList}
+          edit={GroupEdit}
+          create={GroupCreate}
+          show={GroupShow}
         />
       </Admin>
     </div>

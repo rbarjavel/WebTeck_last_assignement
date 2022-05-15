@@ -12,6 +12,7 @@ import {
   SelectArrayInput,
 } from "react-admin";
 
+import { GroupTitle } from "../group/GroupTitle";
 import { NoteTitle } from "./NoteTitle";
 import { UserTitle } from "../user/UserTitle";
 
@@ -21,6 +22,9 @@ export const NoteEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="Desc" multiline source="desc" />
         <DateTimeInput label="Due date" source="dueDate" />
+        <ReferenceInput source="group.id" reference="Group" label="group">
+          <SelectInput optionText={GroupTitle} />
+        </ReferenceInput>
         <ReferenceInput source="note.id" reference="Note" label="Note">
           <SelectInput optionText={NoteTitle} />
         </ReferenceInput>

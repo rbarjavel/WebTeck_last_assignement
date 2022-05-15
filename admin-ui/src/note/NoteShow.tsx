@@ -11,6 +11,7 @@ import {
   Datagrid,
 } from "react-admin";
 
+import { GROUP_TITLE_FIELD } from "../group/GroupTitle";
 import { NOTE_TITLE_FIELD } from "./NoteTitle";
 
 export const NoteShow = (props: ShowProps): React.ReactElement => {
@@ -20,6 +21,9 @@ export const NoteShow = (props: ShowProps): React.ReactElement => {
         <DateField source="createdAt" label="Created At" />
         <TextField label="Desc" source="desc" />
         <TextField label="Due date" source="dueDate" />
+        <ReferenceField label="group" source="group.id" reference="Group">
+          <TextField source={GROUP_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="ID" source="id" />
         <ReferenceField label="Note" source="note.id" reference="Note">
           <TextField source={NOTE_TITLE_FIELD} />
@@ -33,6 +37,9 @@ export const NoteShow = (props: ShowProps): React.ReactElement => {
             <DateField source="createdAt" label="Created At" />
             <TextField label="Desc" source="desc" />
             <TextField label="Due date" source="dueDate" />
+            <ReferenceField label="group" source="group.id" reference="Group">
+              <TextField source={GROUP_TITLE_FIELD} />
+            </ReferenceField>
             <TextField label="ID" source="id" />
             <ReferenceField label="Note" source="note.id" reference="Note">
               <TextField source={NOTE_TITLE_FIELD} />

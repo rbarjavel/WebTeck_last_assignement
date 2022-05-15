@@ -45,10 +45,25 @@ export class UserControllerBase {
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        group: data.group
+          ? {
+              connect: data.group,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         firstName: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         lastName: true,
         profilePicture: true,
@@ -76,6 +91,13 @@ export class UserControllerBase {
       select: {
         createdAt: true,
         firstName: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         lastName: true,
         profilePicture: true,
@@ -99,6 +121,13 @@ export class UserControllerBase {
       select: {
         createdAt: true,
         firstName: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         lastName: true,
         profilePicture: true,
@@ -132,10 +161,25 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          group: data.group
+            ? {
+                connect: data.group,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           firstName: true,
+
+          group: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           lastName: true,
           profilePicture: true,
@@ -172,6 +216,13 @@ export class UserControllerBase {
         select: {
           createdAt: true,
           firstName: true,
+
+          group: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           lastName: true,
           profilePicture: true,
@@ -209,6 +260,13 @@ export class UserControllerBase {
         createdAt: true,
         desc: true,
         dueDate: true,
+
+        group: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
 
         note: {

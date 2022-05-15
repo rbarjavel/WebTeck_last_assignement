@@ -10,6 +10,8 @@ generator client {
 model User {
   createdAt      DateTime @default(now())
   firstName      String
+  group          Group?   @relation(fields: [groupId], references: [id])
+  groupId        String?
   id             String   @id @default(cuid())
   lastName       String
   notes          Note[]
@@ -24,6 +26,8 @@ model Note {
   createdAt DateTime          @default(now())
   desc      String
   dueDate   DateTime?
+  group     Group?            @relation(fields: [groupId], references: [id])
+  groupId   String?
   id        String            @id @default(cuid())
   note      Note?             @relation(name: "NoteOnNotes", fields: [noteId], references: [id])
   noteId    String?
@@ -33,6 +37,15 @@ model Note {
   status    EnumNoteStatus?
   title     String
   updatedAt DateTime          @updatedAt
+}
+
+model Group {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      String
+  notes     Note[]
+  updatedAt DateTime @updatedAt
+  users     User[]
 }
 
 enum EnumNoteSeverity {

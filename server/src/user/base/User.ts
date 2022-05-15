@@ -13,6 +13,7 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
+import { Group } from "../../group/base/Group";
 import { Note } from "../../note/base/Note";
 @ObjectType()
 class User {
@@ -31,6 +32,15 @@ class User {
   @IsString()
   @Field(() => String)
   firstName!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => Group,
+  })
+  @ValidateNested()
+  @Type(() => Group)
+  @IsOptional()
+  group?: Group | null;
 
   @ApiProperty({
     required: true,

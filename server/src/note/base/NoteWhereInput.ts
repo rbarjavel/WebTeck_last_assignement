@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
 import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteListRelationFilter } from "./NoteListRelationFilter";
@@ -32,6 +33,18 @@ class NoteWhereInput {
     nullable: true,
   })
   dueDate?: DateTimeNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => GroupWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => GroupWhereUniqueInput)
+  @IsOptional()
+  @Field(() => GroupWhereUniqueInput, {
+    nullable: true,
+  })
+  group?: GroupWhereUniqueInput;
 
   @ApiProperty({
     required: false,

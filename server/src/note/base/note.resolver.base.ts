@@ -27,6 +27,7 @@ import { NoteFindUniqueArgs } from "./NoteFindUniqueArgs";
 import { Note } from "./Note";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
+import { Group } from "../../group/base/Group";
 import { NoteService } from "../note.service";
 
 @graphql.Resolver(() => Note)
@@ -95,6 +96,12 @@ export class NoteResolverBase {
       data: {
         ...args.data,
 
+        group: args.data.group
+          ? {
+              connect: args.data.group,
+            }
+          : undefined,
+
         note: args.data.note
           ? {
               connect: args.data.note,
@@ -117,6 +124,12 @@ export class NoteResolverBase {
         ...args,
         data: {
           ...args.data,
+
+          group: args.data.group
+            ? {
+                connect: args.data.group,
+              }
+            : undefined,
 
           note: args.data.note
             ? {
@@ -192,6 +205,22 @@ export class NoteResolverBase {
     }
 
     return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Group, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Group",
+    action: "read",
+    possession: "any",
+  })
+  async group(@graphql.Parent() parent: Note): Promise<Group | null> {
+    const result = await this.service.getGroup(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

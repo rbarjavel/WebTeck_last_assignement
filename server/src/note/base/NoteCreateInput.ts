@@ -19,6 +19,7 @@ import {
   IsEnum,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteCreateNestedManyWithoutNotesInput } from "./NoteCreateNestedManyWithoutNotesInput";
 import { UserCreateNestedManyWithoutNotesInput } from "./UserCreateNestedManyWithoutNotesInput";
@@ -44,6 +45,18 @@ class NoteCreateInput {
     nullable: true,
   })
   dueDate?: Date | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => GroupWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => GroupWhereUniqueInput)
+  @IsOptional()
+  @Field(() => GroupWhereUniqueInput, {
+    nullable: true,
+  })
+  group?: GroupWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
