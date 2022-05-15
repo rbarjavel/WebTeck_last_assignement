@@ -28,7 +28,7 @@ model Note {
   groupId   String
   id        String            @id @default(cuid())
   severity  EnumNoteSeverity?
-  status    EnumNoteStatus?
+  status    EnumNoteStatus
   title     String
   updatedAt DateTime          @updatedAt
 }

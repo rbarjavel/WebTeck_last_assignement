@@ -64,15 +64,12 @@ class NoteCreateInput {
   severity?: "Low" | "Moderate" | "High" | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     enum: EnumNoteStatus,
   })
   @IsEnum(EnumNoteStatus)
-  @IsOptional()
-  @Field(() => EnumNoteStatus, {
-    nullable: true,
-  })
-  status?: "ToDo" | "Done" | null;
+  @Field(() => EnumNoteStatus)
+  status!: "ToDo" | "Done";
 
   @ApiProperty({
     required: true,

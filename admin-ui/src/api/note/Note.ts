@@ -7,7 +7,7 @@ export type Note = {
   group?: Group;
   id: string;
   severity?: "Low" | "Moderate" | "High" | null;
-  status?: "ToDo" | "Done" | null;
+  status?: "ToDo" | "Done";
   title: string;
   updatedAt: Date;
 };
