@@ -32,6 +32,18 @@
   {
     "role": "user",
     "resource": "Note",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Note",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Note",
     "action": "read:any",
     "attributes": "*"
   },

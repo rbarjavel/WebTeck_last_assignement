@@ -25,8 +25,6 @@ import { DeleteNoteArgs } from "./DeleteNoteArgs";
 import { NoteFindManyArgs } from "./NoteFindManyArgs";
 import { NoteFindUniqueArgs } from "./NoteFindUniqueArgs";
 import { Note } from "./Note";
-import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
-import { User } from "../../user/base/User";
 import { Group } from "../../group/base/Group";
 import { NoteService } from "../note.service";
 
@@ -96,17 +94,9 @@ export class NoteResolverBase {
       data: {
         ...args.data,
 
-        group: args.data.group
-          ? {
-              connect: args.data.group,
-            }
-          : undefined,
-
-        note: args.data.note
-          ? {
-              connect: args.data.note,
-            }
-          : undefined,
+        group: {
+          connect: args.data.group,
+        },
       },
     });
   }
@@ -125,17 +115,9 @@ export class NoteResolverBase {
         data: {
           ...args.data,
 
-          group: args.data.group
-            ? {
-                connect: args.data.group,
-              }
-            : undefined,
-
-          note: args.data.note
-            ? {
-                connect: args.data.note,
-              }
-            : undefined,
+          group: {
+            connect: args.data.group,
+          },
         },
       });
     } catch (error) {
@@ -168,46 +150,6 @@ export class NoteResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Note])
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "read",
-    possession: "any",
-  })
-  async notes(
-    @graphql.Parent() parent: Note,
-    @graphql.Args() args: NoteFindManyArgs
-  ): Promise<Note[]> {
-    const results = await this.service.findNotes(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [User])
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async owner(
-    @graphql.Parent() parent: Note,
-    @graphql.Args() args: UserFindManyArgs
-  ): Promise<User[]> {
-    const results = await this.service.findOwner(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Group, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "Group",
@@ -216,22 +158,6 @@ export class NoteResolverBase {
   })
   async group(@graphql.Parent() parent: Note): Promise<Group | null> {
     const result = await this.service.getGroup(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Note, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "read",
-    possession: "any",
-  })
-  async note(@graphql.Parent() parent: Note): Promise<Note | null> {
-    const result = await this.service.getNote(parent.id);
 
     if (!result) {
       return null;

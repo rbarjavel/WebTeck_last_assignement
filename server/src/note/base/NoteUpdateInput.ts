@@ -20,9 +20,6 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
-import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
-import { NoteUpdateManyWithoutNotesInput } from "./NoteUpdateManyWithoutNotesInput";
-import { UserUpdateManyWithoutNotesInput } from "./UserUpdateManyWithoutNotesInput";
 import { EnumNoteSeverity } from "./EnumNoteSeverity";
 import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
@@ -59,43 +56,7 @@ class NoteUpdateInput {
   @Field(() => GroupWhereUniqueInput, {
     nullable: true,
   })
-  group?: GroupWhereUniqueInput | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => NoteWhereUniqueInput)
-  @IsOptional()
-  @Field(() => NoteWhereUniqueInput, {
-    nullable: true,
-  })
-  note?: NoteWhereUniqueInput | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => NoteUpdateManyWithoutNotesInput,
-  })
-  @ValidateNested()
-  @Type(() => NoteUpdateManyWithoutNotesInput)
-  @IsOptional()
-  @Field(() => NoteUpdateManyWithoutNotesInput, {
-    nullable: true,
-  })
-  notes?: NoteUpdateManyWithoutNotesInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserUpdateManyWithoutNotesInput,
-  })
-  @ValidateNested()
-  @Type(() => UserUpdateManyWithoutNotesInput)
-  @IsOptional()
-  @Field(() => UserUpdateManyWithoutNotesInput, {
-    nullable: true,
-  })
-  owner?: UserUpdateManyWithoutNotesInput;
+  group?: GroupWhereUniqueInput;
 
   @ApiProperty({
     required: false,

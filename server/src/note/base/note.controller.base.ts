@@ -27,9 +27,6 @@ import { NoteWhereUniqueInput } from "./NoteWhereUniqueInput";
 import { NoteFindManyArgs } from "./NoteFindManyArgs";
 import { NoteUpdateInput } from "./NoteUpdateInput";
 import { Note } from "./Note";
-import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
-import { User } from "../../user/base/User";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class NoteControllerBase {
@@ -52,17 +49,9 @@ export class NoteControllerBase {
       data: {
         ...data,
 
-        group: data.group
-          ? {
-              connect: data.group,
-            }
-          : undefined,
-
-        note: data.note
-          ? {
-              connect: data.note,
-            }
-          : undefined,
+        group: {
+          connect: data.group,
+        },
       },
       select: {
         createdAt: true,
@@ -76,13 +65,6 @@ export class NoteControllerBase {
         },
 
         id: true,
-
-        note: {
-          select: {
-            id: true,
-          },
-        },
-
         severity: true,
         status: true,
         title: true,
@@ -117,13 +99,6 @@ export class NoteControllerBase {
         },
 
         id: true,
-
-        note: {
-          select: {
-            id: true,
-          },
-        },
-
         severity: true,
         status: true,
         title: true,
@@ -159,13 +134,6 @@ export class NoteControllerBase {
         },
 
         id: true,
-
-        note: {
-          select: {
-            id: true,
-          },
-        },
-
         severity: true,
         status: true,
         title: true,
@@ -200,17 +168,9 @@ export class NoteControllerBase {
         data: {
           ...data,
 
-          group: data.group
-            ? {
-                connect: data.group,
-              }
-            : undefined,
-
-          note: data.note
-            ? {
-                connect: data.note,
-              }
-            : undefined,
+          group: {
+            connect: data.group,
+          },
         },
         select: {
           createdAt: true,
@@ -224,13 +184,6 @@ export class NoteControllerBase {
           },
 
           id: true,
-
-          note: {
-            select: {
-              id: true,
-            },
-          },
-
           severity: true,
           status: true,
           title: true,
@@ -274,13 +227,6 @@ export class NoteControllerBase {
           },
 
           id: true,
-
-          note: {
-            select: {
-              id: true,
-            },
-          },
-
           severity: true,
           status: true,
           title: true,
@@ -295,219 +241,5 @@ export class NoteControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "read",
-    possession: "any",
-  })
-  @common.Get("/:id/notes")
-  @ApiNestedQuery(NoteFindManyArgs)
-  async findManyNotes(
-    @common.Req() request: Request,
-    @common.Param() params: NoteWhereUniqueInput
-  ): Promise<Note[]> {
-    const query = plainToClass(NoteFindManyArgs, request.query);
-    const results = await this.service.findNotes(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        desc: true,
-        dueDate: true,
-
-        group: {
-          select: {
-            id: true,
-          },
-        },
-
-        id: true,
-
-        note: {
-          select: {
-            id: true,
-          },
-        },
-
-        severity: true,
-        status: true,
-        title: true,
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "update",
-    possession: "any",
-  })
-  @common.Post("/:id/notes")
-  async connectNotes(
-    @common.Param() params: NoteWhereUniqueInput,
-    @common.Body() body: NoteWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      notes: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "update",
-    possession: "any",
-  })
-  @common.Patch("/:id/notes")
-  async updateNotes(
-    @common.Param() params: NoteWhereUniqueInput,
-    @common.Body() body: NoteWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      notes: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "update",
-    possession: "any",
-  })
-  @common.Delete("/:id/notes")
-  async disconnectNotes(
-    @common.Param() params: NoteWhereUniqueInput,
-    @common.Body() body: NoteWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      notes: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  @common.Get("/:id/owner")
-  @ApiNestedQuery(UserFindManyArgs)
-  async findManyOwner(
-    @common.Req() request: Request,
-    @common.Param() params: NoteWhereUniqueInput
-  ): Promise<User[]> {
-    const query = plainToClass(UserFindManyArgs, request.query);
-    const results = await this.service.findOwner(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        firstName: true,
-        id: true,
-        lastName: true,
-        profilePicture: true,
-        roles: true,
-        updatedAt: true,
-        username: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "update",
-    possession: "any",
-  })
-  @common.Post("/:id/owner")
-  async connectOwner(
-    @common.Param() params: NoteWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      owner: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "update",
-    possession: "any",
-  })
-  @common.Patch("/:id/owner")
-  async updateOwner(
-    @common.Param() params: NoteWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      owner: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Note",
-    action: "update",
-    possession: "any",
-  })
-  @common.Delete("/:id/owner")
-  async disconnectOwner(
-    @common.Param() params: NoteWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      owner: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

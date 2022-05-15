@@ -209,13 +209,6 @@ export class GroupControllerBase {
         },
 
         id: true,
-
-        note: {
-          select: {
-            id: true,
-          },
-        },
-
         severity: true,
         status: true,
         title: true,

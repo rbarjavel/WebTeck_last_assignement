@@ -6,7 +6,6 @@ export type NoteOrderByInput = {
   dueDate?: SortOrder;
   groupId?: SortOrder;
   id?: SortOrder;
-  noteId?: SortOrder;
   severity?: SortOrder;
   status?: SortOrder;
   title?: SortOrder;
