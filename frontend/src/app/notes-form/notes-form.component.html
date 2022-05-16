@@ -1,0 +1,23 @@
+<label class="flex flex-col text-xl">
+    Title *
+    <input [formControl]="title" type="text" class="mt-1 block w-full px-3 py-2 border-b text-slate-600 invalid:text-red-400 invalid:border-red-400 invalid:border-b-2 focus:outline-none border-grey focus:drop-shadow-xl hover:drop-shadow-xl" required=true>
+</label>
+
+<label class="flex flex-col text-xl">
+    Desc *
+    <input [formControl]="desc" type="text" class="mt-1 block w-full px-3 py-2 border-b text-slate-600 invalid:text-red-400 invalid:border-red-400 invalid:border-b-2 focus:outline-none border-grey focus:drop-shadow-xl hover:drop-shadow-xl" required=true>
+</label>
+<br>
+
+<label class="flex flex-col text-xl">
+    Severity *
+    <select [formControl]="serverity" class="h-8 text-lg bg-white mt-4 hover:bg-red-300 hover:text-white focus:text-black focus:bg-white" required>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+    </select>
+</label>
+<button (click)="OnClickAddNote()" *ngIf="title.valid && desc.valid && serverity.valid; else unactive" class="border bg-cream px-3 py-2 hover:text-white hover:bg-red-400 mt-10">Add Note</button>
+<ng-template #unactive>
+    <button class="border bg-grey px-3 py-2 mt-10" disabled>Add Note</button>
+</ng-template>

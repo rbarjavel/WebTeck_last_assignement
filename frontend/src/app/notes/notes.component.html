@@ -1,0 +1,65 @@
+<div *ngIf="isProjectSelected; else unactive" class="felx flex-col min-h-full">
+    <div class="flex justify-center text-2xl text-red-400">
+        <p>{{name}}</p>
+    </div>
+    <div class="flex justify-end space-x-10 text-red-300">
+        <button (click)="ClickToggleAddNote()" class="hover:text-cream">
+            <mat-icon>note_add</mat-icon>
+        </button>
+        <button (click)="ClickToggleAddUser()" class="hover:text-cream">
+            <mat-icon>group_add</mat-icon>
+        </button>
+        <button (click)="ClickToggleRmUser()" class="hover:text-cream">
+            <mat-icon>person_remove</mat-icon>
+        </button>
+        <button (click)="OnClickDelete()" class="hover:text-cream">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="toggleRmUser" class="flex flex-col min-h-full">
+        <div class="flex justify-center mt-4">
+            <h3 class="text-red-400 text-2xl">Remove someone to this project</h3>
+        </div>
+        <div class="flex">
+            <select [(ngModel)]="userToRm" class="h-8 text-lg bg-white mt-4 hover:bg-red-300 hover:text-white focus:text-black focus:bg-white basis-5/6" (change)="OnChangeUserRm($event.target.value)">
+                <option class="mr-4" *ngFor="let user of usersSub" [value]="user.id" value="{{user.id}}">{{user.username}}</option>
+            </select>
+            <button (click)="ClickRmUser()" class="basis-1/6 hover:text-cream">
+                <mat-icon class="text-[52px] text-red-300">group_add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="toggleAddUser" class="flex flex-col min-h-full">
+        <div class="flex justify-center mt-4">
+            <h3 class="text-red-400 text-2xl">Add someone to this project</h3>
+        </div>
+        <div class="flex">
+            <select [(ngModel)]="userToAdd" class="h-8 text-lg bg-white mt-4 hover:bg-red-300 hover:text-white focus:text-black focus:bg-white basis-5/6" (change)="OnChangeUserAdd($event.target.value)">
+                <option class="mr-4" *ngFor="let user of usersUnSub" [value]="user.id" value="{{user.id}}">{{user.username}}</option>
+            </select>
+            <button (click)="ClickAddUser()" class="basis-1/6 hover:text-cream">
+                <mat-icon class="text-[52px] text-red-300">group_add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="toggleNote" class="flex flex-col min-h-full">
+        <div class="flex justify-center mt-4">
+            <h3 class="text-red-400 text-2xl">Add a Task</h3>
+        </div>
+        <div class="flex">
+            <app-notes-form [id]="id" class="flex flex-col mt-10 min-w-full"></app-notes-form>
+        </div>
+    </div>
+
+    <div class="mt-10 h-5/6 border-2">
+        <app-notes-front *ngFor="let note of notes" [title]="note.title" [desc]="note.desc" [severity]="note.serverity" [status]="note.status" [id]="note.id"></app-notes-front>
+    </div>
+</div>
+<ng-template #unactive>
+    <div class="flex justify-items-center flex-col justify-center">
+        <p class="text-xl text-dgrey text-center mt-10">No Project Selected</p>
+    </div>
+</ng-template>

@@ -1,0 +1,7 @@
+<div class="flex content-center mt-15">
+    <input [formControl]="name" type="text" class="mt-1 block w-full px-3 py-2 border-b text-slate-600 invalid:text-red-400 invalid:border-red-400 invalid:border-b-2 focus:outline-none border-grey focus:drop-shadow-xl hover:drop-shadow-xl" required=true>
+        <button (click)="OnClickAddGroup()" *ngIf="name.valid; else unactive" class="border bg-cream px-3 py-2 hover:text-white hover:bg-red-400">AddGroup</button>
+        <ng-template #unactive>
+            <button class="border bg-grey px-3 py-2 $" disabled>AddGroup</button>
+        </ng-template>
+</div>

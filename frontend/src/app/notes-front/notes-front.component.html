@@ -1,0 +1,28 @@
+<div *ngIf="status == false; else alternative" class="grid grid-cols-4 mt-4 text-lg hover:bg-red-200 hover:text-white">
+    <button *ngIf="status == false; else unactive" (click)="ClickCheck()">
+        <mat-icon class="text-red-300">check_box_outline_blank</mat-icon>
+    </button>
+    <ng-template #unactive>
+        <button (click)="ClickUnCheck()">
+            <mat-icon class="text-red-300">check_box</mat-icon>
+        </button>
+    </ng-template>
+    <p>{{title}}</p>
+    <p>{{desc}}</p>
+    <p>{{severity}}</p>
+</div>
+<ng-template #alternative>
+    <div *ngIf="status; else alternative" class="grid grid-cols-4 mt-4 bg-slate-200 text-lg hover:bg-red-200 hover:text-white">
+        <button *ngIf="status == false; else unactive" (click)="ClickCheck()">
+            <mat-icon class="text-red-300">check_box_outline_blank</mat-icon>
+        </button>
+        <ng-template #unactive>
+            <button (click)="ClickUnCheck()">
+                <mat-icon class="text-red-300">check_box</mat-icon>
+            </button>
+        </ng-template>
+        <p>{{title}}</p>
+        <p>{{desc}}</p>
+        <p>{{severity}}</p>
+    </div>
+</ng-template>
