@@ -1,11 +1,25 @@
-This project was generated with [Amplication](https://amplication.com)
+## Warning Docker must be installed !
+---
+## Running the backend
+```bash
+cd server/
 
-It consists of two packages:
+npm install
 
-### [Server](./server/README.md)
+npm run docker:db
 
-### [Admin UI](./admin-ui/README.md)
+npm run prisma:generate
 
-### Learn more
+npm run db:init
 
-You can learn more in the [Amplication documentation](https://docs.amplication.com/guides/getting-started).
+npm run
+```
+---
+## Running the frontend
+```bash
+cd frontend/
+
+npm install
+
+ng serve --open
+```
