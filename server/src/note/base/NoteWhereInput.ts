@@ -14,10 +14,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
-import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
 import { EnumNoteServerity } from "./EnumNoteServerity";
-import { EnumNoteStatus } from "./EnumNoteStatus";
+import { BooleanFilter } from "../../util/BooleanFilter";
 @InputType()
 class NoteWhereInput {
   @ApiProperty({
@@ -30,17 +29,6 @@ class NoteWhereInput {
     nullable: true,
   })
   desc?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: DateTimeNullableFilter,
-  })
-  @Type(() => DateTimeNullableFilter)
-  @IsOptional()
-  @Field(() => DateTimeNullableFilter, {
-    nullable: true,
-  })
-  dueDate?: DateTimeNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -78,14 +66,14 @@ class NoteWhereInput {
 
   @ApiProperty({
     required: false,
-    enum: EnumNoteStatus,
+    type: BooleanFilter,
   })
-  @IsEnum(EnumNoteStatus)
+  @Type(() => BooleanFilter)
   @IsOptional()
-  @Field(() => EnumNoteStatus, {
+  @Field(() => BooleanFilter, {
     nullable: true,
   })
-  status?: "ToDo" | "InProgress" | "Done";
+  status?: BooleanFilter;
 
   @ApiProperty({
     required: false,

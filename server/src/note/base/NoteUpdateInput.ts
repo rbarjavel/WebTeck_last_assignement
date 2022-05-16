@@ -14,14 +14,13 @@ import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
   IsOptional,
-  IsDate,
   ValidateNested,
   IsEnum,
+  IsBoolean,
 } from "class-validator";
-import { Type } from "class-transformer";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
+import { Type } from "class-transformer";
 import { EnumNoteServerity } from "./EnumNoteServerity";
-import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteUpdateInput {
   @ApiProperty({
@@ -34,17 +33,6 @@ class NoteUpdateInput {
     nullable: true,
   })
   desc?: string;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @IsOptional()
-  @Field(() => Date, {
-    nullable: true,
-  })
-  dueDate?: Date | null;
 
   @ApiProperty({
     required: false,
@@ -71,14 +59,14 @@ class NoteUpdateInput {
 
   @ApiProperty({
     required: false,
-    enum: EnumNoteStatus,
+    type: Boolean,
   })
-  @IsEnum(EnumNoteStatus)
+  @IsBoolean()
   @IsOptional()
-  @Field(() => EnumNoteStatus, {
+  @Field(() => Boolean, {
     nullable: true,
   })
-  status?: "ToDo" | "InProgress" | "Done";
+  status?: boolean;
 
   @ApiProperty({
     required: false,

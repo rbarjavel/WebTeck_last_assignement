@@ -14,14 +14,14 @@ import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
   IsString,
-  IsOptional,
   ValidateNested,
+  IsOptional,
   IsEnum,
+  IsBoolean,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Group } from "../../group/base/Group";
 import { EnumNoteServerity } from "./EnumNoteServerity";
-import { EnumNoteStatus } from "./EnumNoteStatus";
 @ObjectType()
 class Note {
   @ApiProperty({
@@ -39,17 +39,6 @@ class Note {
   @IsString()
   @Field(() => String)
   desc!: string;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @IsOptional()
-  @Field(() => Date, {
-    nullable: true,
-  })
-  dueDate!: Date | null;
 
   @ApiProperty({
     required: false,
@@ -80,13 +69,11 @@ class Note {
 
   @ApiProperty({
     required: true,
-    enum: EnumNoteStatus,
+    type: Boolean,
   })
-  @IsEnum(EnumNoteStatus)
-  @Field(() => EnumNoteStatus, {
-    nullable: true,
-  })
-  status?: "ToDo" | "InProgress" | "Done";
+  @IsBoolean()
+  @Field(() => Boolean)
+  status!: boolean;
 
   @ApiProperty({
     required: true,

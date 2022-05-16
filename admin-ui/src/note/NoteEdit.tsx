@@ -5,9 +5,9 @@ import {
   SimpleForm,
   EditProps,
   TextInput,
-  DateTimeInput,
   ReferenceInput,
   SelectInput,
+  BooleanInput,
 } from "react-admin";
 
 import { GroupTitle } from "../group/GroupTitle";
@@ -17,7 +17,6 @@ export const NoteEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput label="Desc" multiline source="desc" />
-        <DateTimeInput label="dueDate" source="dueDate" />
         <ReferenceInput source="group.id" reference="Group" label="group">
           <SelectInput optionText={GroupTitle} />
         </ReferenceInput>
@@ -32,17 +31,7 @@ export const NoteEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <SelectInput
-          source="status"
-          label="status"
-          choices={[
-            { label: "ToDo", value: "ToDo" },
-            { label: "InProgress", value: "InProgress" },
-            { label: "Done", value: "Done" },
-          ]}
-          optionText="label"
-          optionValue="value"
-        />
+        <BooleanInput label="status" source="status" />
         <TextInput label="Title" source="title" />
       </SimpleForm>
     </Edit>

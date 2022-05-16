@@ -52,7 +52,6 @@ export class NoteControllerBase {
       select: {
         createdAt: true,
         desc: true,
-        dueDate: true,
 
         group: {
           select: {
@@ -81,7 +80,6 @@ export class NoteControllerBase {
       select: {
         createdAt: true,
         desc: true,
-        dueDate: true,
 
         group: {
           select: {
@@ -111,7 +109,6 @@ export class NoteControllerBase {
       select: {
         createdAt: true,
         desc: true,
-        dueDate: true,
 
         group: {
           select: {
@@ -158,7 +155,6 @@ export class NoteControllerBase {
         select: {
           createdAt: true,
           desc: true,
-          dueDate: true,
 
           group: {
             select: {
@@ -197,7 +193,6 @@ export class NoteControllerBase {
         select: {
           createdAt: true,
           desc: true,
-          dueDate: true,
 
           group: {
             select: {
