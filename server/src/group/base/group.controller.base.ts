@@ -171,7 +171,6 @@ export class GroupControllerBase {
       select: {
         createdAt: true,
         desc: true,
-        dueDate: true,
 
         group: {
           select: {

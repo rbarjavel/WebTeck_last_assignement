@@ -9,6 +9,7 @@ import {
   ReferenceManyField,
   Datagrid,
   ReferenceField,
+  BooleanField,
 } from "react-admin";
 
 import { GROUP_TITLE_FIELD } from "./GroupTitle";
@@ -25,13 +26,12 @@ export const GroupShow = (props: ShowProps): React.ReactElement => {
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
             <TextField label="Desc" source="desc" />
-            <TextField label="dueDate" source="dueDate" />
             <ReferenceField label="group" source="group.id" reference="Group">
               <TextField source={GROUP_TITLE_FIELD} />
             </ReferenceField>
             <TextField label="ID" source="id" />
             <TextField label="serverity" source="serverity" />
-            <TextField label="status" source="status" />
+            <BooleanField label="status" source="status" />
             <TextField label="Title" source="title" />
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>

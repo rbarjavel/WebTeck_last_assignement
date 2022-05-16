@@ -13,16 +13,16 @@ const existingId = "existingId";
 const CREATE_INPUT = {
   createdAt: new Date(),
   desc: "exampleDesc",
-  dueDate: new Date(),
   id: "exampleId",
+  status: "true",
   title: "exampleTitle",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
   createdAt: new Date(),
   desc: "exampleDesc",
-  dueDate: new Date(),
   id: "exampleId",
+  status: "true",
   title: "exampleTitle",
   updatedAt: new Date(),
 };
@@ -30,8 +30,8 @@ const FIND_MANY_RESULT = [
   {
     createdAt: new Date(),
     desc: "exampleDesc",
-    dueDate: new Date(),
     id: "exampleId",
+    status: "true",
     title: "exampleTitle",
     updatedAt: new Date(),
   },
@@ -39,8 +39,8 @@ const FIND_MANY_RESULT = [
 const FIND_ONE_RESULT = {
   createdAt: new Date(),
   desc: "exampleDesc",
-  dueDate: new Date(),
   id: "exampleId",
+  status: "true",
   title: "exampleTitle",
   updatedAt: new Date(),
 };
@@ -109,7 +109,6 @@ describe("Note", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
-        dueDate: CREATE_RESULT.dueDate.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       });
   });
@@ -122,7 +121,6 @@ describe("Note", () => {
         {
           ...FIND_MANY_RESULT[0],
           createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
-          dueDate: FIND_MANY_RESULT[0].dueDate.toISOString(),
           updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
         },
       ]);
@@ -146,7 +144,6 @@ describe("Note", () => {
       .expect({
         ...FIND_ONE_RESULT,
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
-        dueDate: FIND_ONE_RESULT.dueDate.toISOString(),
         updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
       });
   });

@@ -13,15 +13,14 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
-  IsDate,
-  IsOptional,
   ValidateNested,
+  IsOptional,
   IsEnum,
+  IsBoolean,
 } from "class-validator";
-import { Type } from "class-transformer";
 import { GroupWhereUniqueInput } from "../../group/base/GroupWhereUniqueInput";
+import { Type } from "class-transformer";
 import { EnumNoteServerity } from "./EnumNoteServerity";
-import { EnumNoteStatus } from "./EnumNoteStatus";
 @InputType()
 class NoteCreateInput {
   @ApiProperty({
@@ -31,17 +30,6 @@ class NoteCreateInput {
   @IsString()
   @Field(() => String)
   desc!: string;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @IsOptional()
-  @Field(() => Date, {
-    nullable: true,
-  })
-  dueDate?: Date | null;
 
   @ApiProperty({
     required: false,
@@ -65,11 +53,11 @@ class NoteCreateInput {
 
   @ApiProperty({
     required: true,
-    enum: EnumNoteStatus,
+    type: Boolean,
   })
-  @IsEnum(EnumNoteStatus)
-  @Field(() => EnumNoteStatus)
-  status!: "ToDo" | "InProgress" | "Done";
+  @IsBoolean()
+  @Field(() => Boolean)
+  status!: boolean;
 
   @ApiProperty({
     required: true,
